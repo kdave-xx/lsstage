@@ -85,7 +85,7 @@ class Logo < ActiveRecord::Base
   named_scope :entry, :conditions => {:kind => KIND[:competition_entry]}
   named_scope :portfolio, :conditions => {:kind => KIND[:profile]}
   named_scope :winners, lambda { |competition| {:conditions => ['entries.status = ?', Entry::STATUS[:winner]], :joins => :entry} }
-  named_scope :image, :conditions => {:flag => true}
+#  named_scope :image, :conditions => {:flag => true}
   
   # Validations
   validates_presence_of :name, :description

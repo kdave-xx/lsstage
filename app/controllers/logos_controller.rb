@@ -71,7 +71,7 @@ class LogosController < ApplicationController
     when 'for_sale'
       conditions[:for_sale] = true
     end
-     @logos = Logo.image.find(:all, :conditions => conditions)
+     @logos = Logo.find(:all, :conditions => conditions)
     
       end
     @logos = @logos.paginate :page => params[:page]
