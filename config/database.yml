@@ -20,7 +20,7 @@ staging:
   database: ls_production
   username: root
   password: dvf27378
-  socket: /opt/local/var/run/mysql5/mysqld.sock
+ # socket: /opt/local/var/run/mysql5/mysqld.sock
 
 production:
   adapter: mysql
@@ -28,4 +28,4 @@ production:
   database: ls_production
   username: root
   password: dvf27378
-  socket: /opt/local/var/run/mysql5/mysqld.sock
+#  socket: /opt/local/var/run/mysql5/mysqld.sock
