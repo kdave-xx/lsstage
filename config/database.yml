@@ -14,12 +14,12 @@ test:
   password:
   socket: /opt/local/var/run/mysql5/mysqld.sock
 
-previous:
+staging:
   adapter: mysql
   encoding: utf8
-  database: logosauce_production
+  database: ls_production
   username: root
-  password:
+  password: dvf27378
   socket: /opt/local/var/run/mysql5/mysqld.sock
 
 production:
