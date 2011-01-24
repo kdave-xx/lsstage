@@ -1,0 +1,12 @@
+<h1>Project winners</h1>
+
+<div id="winners">
+  <% @projects.each do |project| %>
+    <div class="winner clearfix">
+      <%= render project.winning_bid.person %>
+      <%= render project %>
+    </div>    
+  <% end %>
+</div>
+
+<%= will_paginate @projects %>

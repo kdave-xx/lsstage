@@ -1,0 +1,13 @@
+<h1>Purchase this logo</h1>
+
+<h2><%= number_to_currency @logo.price %></h2>
+
+<%= textilize @logo.sale_description %>
+<div style="border-top:1px dotted #ccc; border-bottom:1px dotted #ccc;pdding:10px; margin:20px 0;">
+<h3>Intellectual Property</h3>
+<p>All intellectual property in this design will transfer to the buyer on purchase and successful payment. Click to view <a href="">Terms and conditions</a> that apply to all Logosauce logo sales.</p>
+</div>
+<br />
+<% form_tag pay_logo_path(@logo), :method => :put do %>
+  <%= submit_tag 'Purchase' %>
+<% end %>

@@ -1,0 +1,73 @@
+<div class="feedback_comments encapsulate">
+  <div class="comment_person encapsulate">
+   <%= link_to image_tag(comment.person.avatar.url(:thumb)), comment.person, :class => 'comment_avatar' %> 
+   <p><%= link_to_person comment.person %><br /><em><%= time_ago_in_words comment.created_at %> ago</em></p>
+  </div>
+  
+  <div class="speechbubble">
+    <% if comment.highlight? %>
+      <img width="16" height="32" src="/images/bubble_arrow_yellowleft.gif"/>
+    <% else %>
+      <img width="16" height="32" src="/images/bubble_arrow_whiteleft.gif"/>
+    <% end %>
+  </div>
+  
+
+<div class="comment <%= "comment_highlight" if comment.highlight? %>" id="comment_<%= comment.id %>">
+ 
+ <div class="encapsulate"> 
+  
+  
+  <div class="commenter encapsulate">
+    <div id="leftcommenter" >
+    <% unless comment.rating.blank? %>
+      <% unless comment.subsequent? %>
+        <span>
+          <%= image_tag('/images/tomato_small.gif') * comment.rating %>
+        </span>
+      <% end %>
+    <% end %>
+    </div>
+    
+    <div id="rightcommenter" style="float:right;">
+    <% unless comment.buries.size.zero? %>
+       <%= pluralize comment.buries.size, 'bury' %>
+    <% end %>
+    <% if signed_in? %>
+      <% if can_edit?(comment) %>
+        <%= link_to 'Edit', edit_comment_path(comment) %> |
+      <% end %>
+
+      <% if comment.buried_by?(current_user) %>
+        <%= link_to_remote 'Unbury', :url => unbury_comment_path(comment), :method => :post, :confirm => 'Are you sure? You can only unbury your own bury.' %>
+      <% else %>
+        <%= link_to_remote 'Bury', :url => bury_comment_path(comment), :method => :post, :title => 'If you think this is a bad, rude, untrue or destructive comment you should bury it. If 3 user bury it then the comment will be hidden and any vote suppressed', :confirm => 'Are you sure? After 3 users have buried this comment it will no longer be visible and any vote will be removed.' %>
+      <% end %>
+    <% end %>
+    </div>
+  
+  </div>
+    
+  <div class="body">
+    <% if comment.buried? %>
+      <div>
+        <%= link_to_function 'Comment buried...', "$(this).up('div').next().toggle()" %>
+      </div>
+      <div style="display: none;">
+        <%= textilize comment.body %>
+      </div>
+    <% else %>
+      <%= textilize comment.body %>
+    <% end %>
+    <% if admin? %>
+    <p>
+      <%= link_to 'Delete', comment, :method => :delete, :confirm => 'Are you sure?' %>
+    </p>
+    <% end %>
+  </div>
+</div>
+</div>
+
+
+
+</div>

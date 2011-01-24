@@ -1,0 +1,83 @@
+<% content_for :help do %>
+ <h1>Help with Logos</h1>
+ <p>On this page you can view the most recent logos uploaded to Logosauce or you can change what you're viewing by using the drop down filters. The defaults of which are All (what) and Date (sort order).</p>
+ <ul>
+   <li>Change the dropdown filter (e.g. All) by clicking on it and selecting another option from the list.</li>
+   <li>Mouse over a logo and it will pop up revealing the logo's name and the name of the user who uploaded it.</li>
+   <li>Click any logo to view the logo detail page.</li>
+   <li>You can also Search for a logo by name, tag, description, etc - give it a go.</li>
+   <li>View a Tag cloud of all logos in the system by clicking on the Tags link on the right. The larger the tag the more popular it is.</li>
+   <li>You can also view the top rated logos in the last 30 days or of all time by clicking the appropriate link on the right.</li> 
+  </ul>
+<% end %>
+
+<div id="submenu" class="encapsulate">
+  
+  <% if signed_in? %>
+	  <div class="new">  
+		 <%= link_to '+ New logo', new_logo_path, :title =>  "Upload new logo" %></span>
+	 </div>
+  <% end %>
+  <!--Browse by:
+    < % if signed_in? %>
+  < %= link_to 'My Faves', person_favourites_path(current_user) %>
+ | 
+  < % end %>
+  < %= link_to 'Top Last 30days', logos_path(:order => 'score', :range => 'last_month') %>
+  | 
+  < %= link_to 'Top All Time', logos_path(:order => 'score') %>-->
+  
+  <div class="search">
+  
+  <% form_tag logos_path, :method => :get do %>
+    <%= hidden_field_tag :kind, 'search_result' %>
+    <%= hidden_field_tag :type, @type %>
+    <div>
+       <span style="margin-right:20px;"><%= link_to "Tags", tags_logos_path %></span> <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag 'Search' %>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+
+<div class="encapsulate">
+    
+  <div class="resultsheader">
+    <ul class="title_menu clearfix">
+      <li>Showing</li>
+      <li class="menu_item">
+        <%= link_to_title_menu @kind, 'Select to see All, Portfolio, Competition Entries or Logos For Sale' %>
+        <div class="menu" style="display: none;">
+          <p><%= link_to 'All', logos_path(:kind => 'all', :sort => @sort) %></p>
+          <p><%= link_to 'Portfolio', logos_path(:kind => 'portfolio', :sort => @sort) %></p>
+          <p><%= link_to 'Comp Entries', logos_path(:kind => 'competition_entries', :sort => @sort) %></p>
+          <p><%= link_to 'Comp Winners', logos_path(:kind => 'competition_winners', :sort => @sort) %></p>
+          <p><%= link_to 'For Sale', logos_path(:kind => 'for_sale', :sort => @sort) %></p>
+        </div>
+      </li>
+      <li>logos by</li>
+      <li>
+        <%= link_to_title_menu @sort, 'Sort results by Publish Date, Score or Number of Views' %>
+        <div class="menu" style="display: none;">
+          <p><%= link_to 'Date', logos_path(:kind => @kind, :sort => 'date') %></p>
+          <p><%= link_to 'Score', logos_path(:kind => @kind, :sort => 'score') %></p>
+          <p><%= link_to 'Views', logos_path(:kind => @kind, :sort => 'views') %></p>
+        </div>
+      </li>
+      <li><a class="rss" href="/logos.rss" title="Get new logos via RSS"><img src="/images/rssfeed16x16.png" /></a></li>
+    </ul>
+   </div> 
+   <% unless @keyword.blank? %>
+   <div>
+     Showing all logos for keyword "<%= h @keyword %>"
+   </div>
+   <% end %>
+  
+  <%= render :partial => "logo", :collection => @logos, :locals => {:show_private => @show_private}  %>
+</div>
+</div>
+
+<div class="paginate">
+ <%#= @logos.total_entries %> logos found. <%= will_paginate @logos %>
+</div> 

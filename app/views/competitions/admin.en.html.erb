@@ -1,0 +1,24 @@
+<h1>Admin: <%= h @competition.name %></h1>
+<hr />
+
+<% form_for @competition, :url => admin_competition_path(@competition), :method => :put do |f| %>
+  
+  <%= f.error_messages %>
+  
+  <fieldset>
+    Paid: <%= f.check_box :paid %>
+    <br />
+    Paid at: <%= f.date_select :paid_at, :include_blank => true %>
+  </fieldset>
+
+  <fieldset>
+    Approved: <%= f.check_box :approved %>
+    <br />
+    Approved at: <%= f.date_select :approved_at, :include_blank => true %>
+  </fieldset>
+
+  <hr />
+  <fieldset>
+    <%= f.submit 'Save' %>
+  </fieldset>
+<% end %>

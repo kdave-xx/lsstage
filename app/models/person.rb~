@@ -1,0 +1,285 @@
+class Person < ActiveRecord::Base
+  # Paginate
+  acts_as_solr :fields => [:first_name, :last_name, :nick_name, :id]
+  cattr_reader :per_page
+  @@per_page = 30
+
+  # Meta
+  attr_accessor :password, :old_password, :kind_for_sign_up, :password_reset
+
+  # Constants
+  KIND = {
+    :regular => 1,
+    :designer => 2,
+    :pro_designer => 3,
+    :paid_designer => 4,
+    :client => 5,
+    :admin => 9
+  }
+  PRO_FEE = 50
+  
+  # Captcha
+  apply_simple_captcha
+  
+  # Paperclip
+  has_attached_file :avatar, 
+                    :styles => {:medium => "300x300>", :thumb => "100x100>"},
+                    :default_url => '/images/avatars/default_:style.gif'
+  
+  # Protections
+  attr_readonly :email
+  
+  attr_accessible :nick_name, :first_name, :last_name, 
+                  :password, :old_password, :password_confirmation, :email, :paypal_account, 
+                  :captcha, :captcha_key, :avatar, :kind_for_sign_up
+  
+  # Validations
+  validates_presence_of :nick_name, :first_name, :last_name
+  validates_uniqueness_of :nick_name, :email
+  validates_inclusion_of :kind, :in => KIND.values
+  
+  validates_presence_of :password, :on => :create
+  validates_confirmation_of :password
+  validates_confirmation_of :password_reset, :message => 'The passwords you entered do not match, please try again'
+  
+  validates_length_of :password_reset, :password,
+                      :minimum => 6,
+                      :allow_blank => true,
+                      :message => 'Your password must be at least 6 characters, please choose a longer password'
+  
+  validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/pjpeg', 'image/x-png', 'image/gif', 'image/png']
+  validates_attachment_size :avatar, :less_than => 1.megabyte
+  
+  validate_on_update  :correct_old_password, :if => :password_changed?
+  
+  # Associations
+  has_one :profile
+  has_one :password_reset_coupon
+  has_one :statistic, :as => :analyzable
+  
+  has_many :comments
+  has_many :tokens
+  has_many :logos, :include => :statistic
+  has_many :sold_logos, :class_name => "Logo", :conditions => {:sold => true}
+  has_many :purchased_logos, :class_name => "Logo", :foreign_key => "buyer_id"
+  has_many :competitions
+  has_many :posts
+  has_many :entries
+  has_many :favourites
+  has_many :projects
+  has_many :bids
+  
+  has_many :transactions, :as => :loggable
+  
+  has_many  :won_competitions, 
+            :through => :entries, 
+            :source => :enterable, 
+            :source_type => 'Competition', 
+            :conditions => ['entries.status = ?', Entry::STATUS[:winner]], 
+            :uniq => true
+  
+  # Named Scopes
+  named_scope :sorted, :order => 'people.created_at DESC'
+  named_scope :pro, :conditions => {:kind => KIND[:pro_designer]}
+  
+  # Callbacks
+  before_validation :set_defaults
+  
+  before_create :apply_kind
+  before_create :store_password
+  before_update :store_password, :if => :password_changed?
+  before_save   :reset_password, :if => Proc.new { |person| ! person.password_reset.blank? }
+  
+  after_create :create_statistic
+  after_create :deliver_welcome_notification
+  
+  # Sphinx
+  #define_index do
+  #  indexes [:first_name, :last_name], :as => :full_name, :sortable => true
+  #  indexes nick_name
+  #  
+  #  indexes profile.biography, :as => :biography
+  #  indexes profile.job_title, :as => :job_title
+  #  indexes profile.company, :as => :company
+  #  indexes profile.location, :as => :location
+  #  indexes profile.country, :as => :country
+  #  indexes :id, :as => :person_id
+    
+  #  has     competition_winner
+  #  has     last_won_at, :sortable => true
+  #  has     statistic.number_of_views, :as => :view, :sortable => true
+  #  has     statistic.score, :as => :score, :sortable => true
+    
+  #  has     created_at, :sortable => true
+  #  has     kind
+    
+  #  set_property :delta => true
+  #end
+  
+  # Class Methods
+  def self.hash_password(password, salt)
+		Digest::SHA1.hexdigest "#{password}|SECRET_U_DONT_KNOW}|#{salt}"
+  end
+
+  def self.sign_in(email, supplied_password)
+    user = Person.find_by_email email
+    if user and user.correct_password?(supplied_password)
+      return user
+    else
+      return nil
+    end
+  end
+  
+  def self.latest
+    Person.search '', :order => :created_at, :sort_mode => :desc, :page => 1,:per_page => 16
+  end
+  
+  # Validation Callbacks
+  def correct_old_password
+    self.errors.add :old_password, I18n.t('person.incorrect_old_password') unless correct_password?(self.old_password)
+  end
+
+  # Record Callbacks
+  def set_defaults
+    self.kind = KIND[:designer] unless self.kind
+    true
+  end
+  
+  def apply_kind
+    if not self.kind_for_sign_up.blank? and [KIND[:designer], KIND[:paid_designer], KIND[:client]].include?(self.kind_for_sign_up.to_i)
+      self.kind = self.kind_for_sign_up.to_i
+    end
+    true
+  end
+  
+  def generate_salt
+    self.password_salt = rand.to_s[8,8]
+  end
+  
+  def store_password
+    if not self.password.blank? and not self.password_confirmation.blank?
+      generate_salt
+      self.password_hash = Person.hash_password(self.password, self.password_salt)
+    end
+  end
+  
+  def reset_password
+    generate_salt
+    self.password_hash = Person.hash_password(self.password_reset, self.password_salt)
+  end
+  
+  # Class Methods
+  def self.search(keyword, options = {})
+    options.reverse_merge!({
+      :field_weights => {
+        :full_name => 20,
+        :nick_name => 10,
+        :location => 5,
+        :country => 5
+      },
+      :sort_mode => :desc
+    })
+    super(keyword, options)
+  end
+  
+  # Instances Mehtods
+  def correct_password?(supplied_password)
+    Person.hash_password(supplied_password, self.password_salt) == self.password_hash
+  end
+  
+  def password_changed?
+    not self.password.blank?
+  end
+  
+  def admin?
+    self.kind == KIND[:admin]
+  end
+  
+  def pro?
+    [KIND[:pro_designer], KIND[:paid_designer]].include? self.kind
+  end
+  
+  def can_upgrade?
+    KIND[:designer] == self.kind
+  end
+  
+  def designer?
+    [KIND[:designer], KIND[:pro_designer], KIND[:paid_designer]].include? self.kind
+  end
+    
+  def full_name
+    [first_name, last_name].join(' ')
+  end
+  
+  def deliver_welcome_notification
+    Notifier.deliver_welcome self
+  end
+  
+  def running_for_competition?(competition)
+    competition.entries.exists? ['person_id = ?', self.id]
+  end
+  
+  def pro_fee
+    Person::PRO_FEE
+  end
+  
+  def pro_fee_in_cents
+    pro_fee * 100
+  end
+  
+  def paid!
+    self.kind = KIND[:paid_designer]
+    self.save
+  end
+  
+  def reset_avatar!
+    self.avatar = nil 
+    self.save
+  end
+  
+  def process_express_payment(token, ip_address)
+    #TODO Refactor this method to transaction.rb and share between all payable models
+    if not token.blank?
+      payment_details = PAYPAL_EXPRESS_GATEWAY.details_for(token)
+      
+      payment_result = PAYPAL_EXPRESS_GATEWAY.purchase(
+        self.pro_fee_in_cents, 
+        {
+          :ip => ip_address,
+          :token => token,
+          :payer_id => payment_details.payer_id
+        }
+      )
+      
+      transactions.create!(
+        :amount => self.pro_fee_in_cents, 
+        :kind => Transaction::KIND[:inward],
+        :action => "PURCHASE",
+        :token => token,
+        :ip_address => ip_address,
+        :payer_id => payment_details.payer_id,
+        :success => payment_result.success?,
+        :authorization => payment_result.authorization,
+        :message => payment_result.message,
+        :references => payment_result.params
+      )
+      
+      self.paid! if payment_result.success?
+      
+      payment_result.success?
+    end
+  end
+  
+  def total_prize_money
+    self.won_competitions.sum(:prize_value) + self.bids.won.sum(:price) + self.sold_logos.sum(:price)
+  end
+  
+  def total_spent_money
+    self.competitions.sum(:prize_value) + self.projects.map { |p| p.bids.won.sum(:price) }.sum + self.purchased_logos.sum(:price)
+  end
+  
+  def total_wins
+    (self.statistic.number_of_gold_medals || 0) + (self.statistic.number_of_projects || 0)
+  end
+  
+end

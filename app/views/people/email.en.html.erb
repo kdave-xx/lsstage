@@ -1,0 +1,6 @@
+<p>We don't display email addresses on this site for privacy reasons - but you can send an email message using this form. Just type your message and click the Send Email button.</p>
+<% form_tag email_person_path(@person), :method => :put do  %>
+  <%= text_area_tag :message %>
+  <br /><br />
+  <%= submit_tag 'Send Email' %>
+<% end %>

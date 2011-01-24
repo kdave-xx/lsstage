@@ -1,0 +1,13 @@
+<h1>competition winners</h1>
+
+<div id="winners">
+  <% @competitions.each do |competition| %>
+    <div class="winner clearfix">
+      <%= render competition.won.logo %>
+      <%= render competition.won.person %>
+      <%= render competition %>
+    </div>    
+  <% end %>
+</div>
+
+<%= will_paginate @competitions %>

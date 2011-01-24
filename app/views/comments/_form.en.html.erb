@@ -1,0 +1,39 @@
+<div class="comment_form">
+  <%= f.error_messages %>
+  <% unless f.object.commentable.is_a? Competition %>
+  <h2>
+    So what do <em>you</em> think?
+  </h2>
+
+  <div class="rating">
+    <span>Rate:
+      <label>
+        <%= f.radio_button :rating, 1 %>
+        <%= image_tag('/images/tomato_small.gif') %>
+      </label>
+    </span>
+    <span>
+      <label>
+        <%= f.radio_button :rating, 2 %>
+        <%= image_tag('/images/tomato_small.gif') * 2 %>
+      </label>
+    </span>
+    <span>
+      <label>
+        <%= f.radio_button :rating, 3 %>
+        <%= image_tag('/images/tomato_small.gif') * 3 %>
+      </label>
+    </span>
+    
+  </div>
+  <% end %>
+  <p>Comment:
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit 'Add' %> 
+    <% unless f.object.commentable.is_a? Competition %>
+      You can rate only once but comment as many times as you like.
+    <% end %>
+  </p>
+</div>

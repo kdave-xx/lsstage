@@ -1,0 +1,15 @@
+<% content_for :help do %>
+ <p>This is a listing fee to advertise your project. We use the <a href="http://paypal.com">Paypal</a> service for payments. <br />
+   You can pay with either Paypal&trade; funds or a Visa&trade; or MasterCard&trade; credit card. <br /><br />Once you pay the fee your Project will automatically go live.
+ </p>
+ 
+<% end %>
+
+<h1>Pay Project listing fee</h1>
+<p>This is the listing fee to advertise your project. All payments for project listing fees is uses the <a href="http://paypal.com">Paypal</a> service. <br />
+  You can pay with Paypal&trade; funds or a Visa&trade; or MasterCard&trade; credit card. <br /><br />Once you pay the fee your Project will automatically go live.
+</p>
+<br />
+<% form_tag pay_project_path(@project), :method => :put do %>
+  <%= submit_tag 'Pay Now' %>
+<% end %>

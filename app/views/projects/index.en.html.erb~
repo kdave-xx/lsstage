@@ -1,0 +1,47 @@
+<% content_for :help do %>
+ <h1>Help with Projects</h1>
+ 
+ <p>Projects are the opposite of competitions. With a <em>Project</em> the aim is to select and comission a single designer to do your design work. Once you advertise your Project, you will receive private bids from designers for your project, which may include a written proposal, quoted price and links to the designers portfolio.  You will be able to see their past work at Logosauce, any competition wins, etc. <br /><br />Once you pick a successful bid, the winner of the bid will be displayed and you will then commence your work with the designer. At the end of the project you may choose to display the results in your logosauce profile and the designer may upload the finished work to his or her portfolio.<br /><br /></p>
+<% end %> 
+ 
+<%= render :partial => "admin" %> 
+ 
+<div id="submenu" class="encapsulate">
+	<% if signed_in? %>
+	  <div class="new">  
+		 <%= link_to '+ Advertise your project', new_project_path, :title =>  "Advertise your project" %></span>
+	 </div>
+	<% end %>
+	<%= render :partial => "search" %> 
+</div>
+
+<div class="encapsulate">
+  <ul class="title_menu clearfix">
+    <li>Showing</li>
+    <li class="menu_item">
+      <%= link_to_title_menu @kind, 'Select from All, Open, Closed, or My Projects' %>
+      <div class="menu" style="display: none;">
+        <p><%= link_to 'All', projects_path(:kind => 'all', :sort => @sort) %></p>
+        <p><%= link_to 'Open', projects_path(:kind => 'open', :sort => @sort) %></p>
+        <p><%= link_to 'Closed', projects_path(:kind => 'closed', :sort => @sort) %></p>
+        <p><%= link_to 'Winners', projects_path(:kind => 'winners', :sort => @sort) %></p>
+        
+        <% if signed_in? %>
+         <p><%= link_to 'My', projects_path(:kind => 'my', :sort => @sort) %></p>
+        <% end %>
+      </div>
+    </li>
+    <li>projects by</li>
+    <li>
+      <%= link_to_title_menu @sort, 'Sort by Open date, Close date or Prize Value.' %>
+      <div class="menu" style="display: none;">
+        <p><%= link_to 'Deadline', projects_path(:kind => @kind, :sort => 'deadline') %></p>
+        <p><%= link_to 'Open Date', projects_path(:kind => @kind, :sort => 'open_date') %></p>
+      </div>
+    </li>
+    <li><a class="rss" href="/projects.rss" title="Get new Projects via RSS"><img src="images/rssfeed16x16.png" /></a></li>
+  </ul>
+  
+	<%= render @projects %>
+	<%= will_paginate @projects %>
+</div>

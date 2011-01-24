@@ -1,0 +1,291 @@
+<% content_for :help do %>
+ <h1>Help with People</h1>
+ <p>On this page you can view all the details and work of a user whether they are a designer client or fan.</p>
+ <ul>
+   <li>You can view a users details, such as name, avatar, status bio and statistics.</li>
+   <li>You can view the last 7 logos uploaded to the users portfolio and click on the logo to view the logo details. Click the show more link to see all the logos for this user.</li>
+   <li>You can view the first 7 logos for sale by this user. Click the show more link to see all the logos For sale by this user.</li>  
+   <li>You can view the favourite designs of this designer.</li>
+   <li>You can view the activity log of this user, including comments made, logos uploaded, etc.</li>
+   <li>You can email the user by clicking the Email Me link - we don't display the users email address for privacy and security reasons.</li>
+   <li>You can follow the user if they have included a Twitter account in their profile.</li>
+ </ul>
+ <% if admin? %>
+<h3>Admins</h3>
+<p>You can make a system wide Announcement that all users will see when they sign-in (only visible to signed-in users). Users can read and close the announcement and it will not be seen again by the user. To replace an announcement you can simply create a new one which will appear for all users again (even if they've closed the previous one). You can use Textile or HTML to style the announcement.</p>
+<% end %> 
+<% end %>
+
+<% if admin? %>
+  <div class="admin_section">
+    <%= link_to 'View Transactions', person_transactions_path(@person) %>
+    <%= link_to 'Edit', edit_person_path(@person) %>
+    <%= link_to 'Admin', admin_person_path(@person) %>
+    
+      <!--admin system wide messages are entered here-->
+
+      <% if admin? %>
+        <hr />
+        <h2>Announcements</h2>
+        <div id="announce-message">
+          <% form_tag create_message_url do %>
+            <fieldset>
+              <div>
+                <%= label :message, "Make a new Announcement" %> <em>(This will be visible to all users throughout the site and can be hidden by the user once read)</em><br />
+      <%#= text_field_tag :message %>
+                <input type="text-area" id="announcement_message" name="announcement[message]" /><br />
+              </div>
+              <br />
+              <%= submit_tag "Post Announcement" %>
+            </fieldset>
+          <% end %>
+        </div>
+      <% end %>
+      <div id="message-body" style="margin: 0 20px; padding:10px; border:1px dotted #ccc;">
+        <h3>Current Announcement</h3>
+        <hr />
+        <% announce = Announcement.last %>
+        <% unless announce.nil? %>
+          <%= textilize announce.message %>
+        <% else %>
+          <strong>No announcement posted yet!</strong>
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+
+<div class="encapsulate">
+ <div class="left">
+  <h1><%= h @person.nick_name %>'s profile <%= link_to image_tag('rssfeed16x16.png', :size => '16x16', :title => 'RSS activity feed for ' + @person.nick_name ), person_path(@person, :format => 'rss') %></h1></div>
+ <div class="right">
+  <% if @person == current_user %>
+     <div class="new" style="float:right; text-align:right;">
+      <p><%= link_to 'Add a new logo', :controller => 'logos', :action => 'new', :title => 'Click to add/create a new logo' %></p>
+     </div>
+<% end %>
+ 
+ </div>
+</div>
+  
+    <% if @person == current_user %>
+     <div id="profile_edit">
+      <p><%= link_to 'Edit profile', edit_person_path(@person) %> </p>
+      
+     </div>
+    <% end %>
+  
+ 
+ <div id="profile" class="encapsulate">
+   <div id="profileleft">
+   <div id="avatar">
+   <h3>Avatar</h3
+    <p><% unless @person.avatar_file_name.blank? %>
+          <%= image_tag(@person.avatar.url(:thumb)) %>
+        <% else %>
+         <% if @person.kind.eql?(5) %>
+           <%= image_tag("avatars/client_thumb.gif") %>
+         <% else %>
+           <%= image_tag("avatars/default_thumb.gif") %>
+         <% end %>
+       <% end %></p>
+    
+     
+    <p  align="center">
+  	 <% if @person.pro? %>
+  	  <span class="pro">Pro!</span><br />
+  	 <% end %>
+  	 <%= person_kind @person %>
+  	</p>
+  	
+   </div>
+  </div>   
+  
+  <div id="profilemiddle">
+   <h3>Details</h3>
+   <p>Member: #<strong><%= @person.id %></strong><br />
+   Nickname:  <strong><%=h @person.nick_name %></strong>
+   <br />
+   Full Name: <strong><%=h @person.full_name %></strong>
+   <br />
+   <% unless @person.profile.job_title.blank? %>
+   	Job Title: <strong><%=h @person.profile.job_title %></strong><br />
+   <% end %>
+   <% unless @person.profile.company.blank? %>
+    Company: <strong><%= h @person.profile.company %></strong><br />
+   <% end %>
+   <% unless @person.profile.company_website.blank? %>
+   	Website: <%= auto_link @person.profile.company_website %><br />
+    <br />
+   <% end %>
+   <% unless @person.profile.location.blank? %>
+    Location: <strong><%=h @person.profile.location %>, <%= @person.profile.country %></strong>
+    <br />
+   <% end %>
+   Member since: <strong><%= @person.created_at.to_s :date %></strong>
+  <br />
+  </p>
+  <br /> 
+  <p>
+  <% if signed_in? %>
+   <%= link_to 'Email Me', email_person_path(@person) %>  
+  <% else %>
+   <em>Log-in</em> to <%= link_to 'Email Me', email_person_path(@person) %>
+  <% end %>  
+  <br />
+  <% unless @person.profile.facebook.blank? %>
+   Facebook: <strong><%= link_to h(@person.profile.facebook), "http://facebook.com/#{h @person.profile.facebook}", :target => :new  %></strong><br />
+  <% end %>
+  <% unless @person.profile.twitter.blank? %>
+   Follow me on Twitter: <%= link_to h(@person.profile.twitter), "http://twitter.com/#{h @person.profile.twitter}", :target => :new  %><br />
+  <% end %>
+ </div>
+ 
+ <div id="profileright">
+ <!-- if designer or pro-designer-->
+ <% if @person.designer? %>
+  <h3>Statistics</h3>
+
+		<div id="statsvotes">Votes: <strong><%= @person.statistic.score %></strong></div>
+		<div id="statsviews">Views: <strong><%= @person.statistic.number_of_views %></strong></div>
+		<div id="statslogos">Logos: <strong><%= @person.logos.count %></strong></div>
+                <%= winning_cup_images(@person) %>
+		<div id="statswins">Comp Wins: <strong><%= @person.statistic.number_of_gold_medals %></strong></div>
+		<div id="statsprojectwins">Project Wins: <strong><%= @person.statistic.number_of_projects %></strong></div>
+		<div id="statssold">Sold logos: <strong><%= @person.sold_logos.size %></strong></div>
+		<div id="statsearnings">Tot Earnings: <strong><%= number_to_currency @person.total_prize_money, :precision => 0 %></strong></div>
+  <% else %>
+   <!-- if client/other-->
+  <h3>Statistics</h3>
+        <h4>Spend</h4> 
+        <div id="statscomps">Comps started: <strong><%= @person.competitions.size %></strong></div>
+		<div id="statsprojects">Projects started: <strong><%= @person.projects.size %></strong></div>
+		<div id="statspurchased">Logos purchased: <strong><%= @person.purchased_logos.size %></strong></div>
+		<div id="statsspent">Tot Spend: <strong><%= number_to_currency @person.total_spent_money, :precision => 0 %></strong></div>
+                <% if @person.admin? %>
+                    <h4>Earnings</h4>
+                	<div id="statsvotes">Votes: <strong><%= @person.statistic.score %></strong></div>
+					<div id="statsviews">Views: <strong><%= @person.statistic.number_of_views %></strong></div>
+					<div id="statslogos">Logos: <strong><%= @person.logos.count %></strong></div>
+			                <%= winning_cup_images(@person) %>
+					<div id="statswins">Comp Wins: <strong><%= @person.statistic.number_of_gold_medals %></strong></div>
+					<div id="statsprojectwins">Project Wins: <strong><%= @person.statistic.number_of_projects %></strong></div>
+					<div id="statssold">Sold logos: <strong><%= @person.sold_logos.size %></strong></div>
+					<div id="statsearnings">Tot Earnings: <strong><%= number_to_currency @person.total_prize_money, :precision => 0 %></strong></div>
+                <% end %>
+   <% end %>
+ </div>     
+</div>
+  
+ <div class="bio">
+   <h3>Bio</h3>
+   <p><%= textilize @person.profile.biography %></p>
+   
+ </div>
+ 
+<!--start logos part-->
+<% if @person == current_user %>
+     <div style="text-align:right;">
+      <p><%= link_to 'Add a new logo', :controller => 'logos', :action => 'new', :title => 'Click to add/create a new logo' %></p>
+     </div>
+<% end %>
+
+
+<!--show any competition wins -->
+<% if @person.entries.winner.any? %>
+	<div class="resultsheader" style="line-height:30px; vertical-align:middle;">
+	  <h1>Competition Wins</h1>
+	</div>
+	<div class="encapsulate">
+	  <% @person.entries.winner.first(7).each do |entry| %>
+	    <%= render :partial => "logos/logo", :object => entry.logo, :locals => {:show_private => true} %>  
+	  <% end %>
+	</div>
+	<p><%= link_to 'More...', person_logos_path(@person, :entry => 1, :won => 1) %></p>
+	<br />
+<% end %>
+
+ 
+<% if @person.logos.portfolio.any? %>
+<div class="resultsheader">
+  <h1>Portfolio logos</h1>
+</div>
+
+<div class="encapsulate">
+  <% @person.logos.portfolio.first(7).each do |logo| %>
+    <%= render :partial => "logos/logo", :object => logo, :locals => {:show_private => true} %>  
+  <% end %>
+</div>
+<p><%= link_to 'Show me more...', person_logos_path(@person) %></p>
+<br />
+<% end %>
+
+<% if @person.logos.for_sale.any? %>
+<div class="resultsheader">
+  <h1>For Sale</h1>
+</div>
+
+<div class="encapsulate">
+  <% @person.logos.for_sale.first(7).each do |logo| %>
+    <%= render :partial => "logos/logo", :object => logo, :locals => {:show_private => true} %>  
+  <% end %>
+</div>
+<p><%= link_to 'More...', person_logos_path(@person) %></p>
+<br />
+<% end %>
+
+
+
+<% if @person.logos.entry.any? %>
+<div class="resultsheader">
+  <h1>Competition entries</h1>
+  
+</div>
+
+<div class="encapsulate">
+  <% @person.logos.entry.first(7).each do |logo| %>
+    <%= render :partial => "logos/logo", :object => logo, :locals => {:show_private => true} %>  
+  <% end %>
+</div>
+<p><%= link_to 'More...', person_logos_path(@person, :entry => 1) %></p>
+<br />
+<% end %>
+
+<!--Faves section-->
+<% if @person.favourites.any? %>
+<div class="resultsheader">
+  <h1>My Faves (including work of others I admire)</h1>
+  
+</div>
+<div class="clearfix">
+  <% @person.favourites.first(7).each do |favourite| %>
+    <%= render :partial => 'logos/logo', :object => favourite.logo, :locals => {:show_private => true} %>  
+  <% end %>
+</div>
+<p><%= link_to 'More...', person_favourites_path(@person) %></p>
+<br />
+<% end %>
+
+<% if @person.competitions.any? %>
+<div class="resultsheader">
+  <h1>My competitions</h1>
+</div>
+<div class="encapsulate">
+  <% @person.competitions.first(7).each do |competition| %>
+    <%= render :partial => 'competitions/competition', :object => competition %>  
+  <% end %>
+</div>
+<p><%= link_to 'More...', person_competitions_path(@person) %></p>
+<br />
+<% end %>
+
+<div class="encapsulate">
+   <% if @activities.any? %>
+    <h1>Activity</h1>
+    <%= render :partial => "shared/activity", :collection => @activities %>
+   <% end %>
+</div>
+
+
+
+

@@ -1,0 +1,13 @@
+<h1>Thank you <%#= @person.nickname %></h1>
+<hr />
+
+<p>
+  A confirmation email has been sent to your given email address for your records, and you have been logged in.
+</p>
+<p>
+  You can add more information to <%= link_to 'your profile page', @person %> by <%= link_to 'editing your profile', edit_person_path(@person) %>
+</p>
+
+<% if @person.kind_for_sign_up.to_i == Person::KIND[:paid_designer] %>
+  Click here to <%= link_to 'pay for your pro designer status', pay_person_path(@person) %>
+<% end %>

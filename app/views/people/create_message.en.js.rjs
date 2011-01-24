@@ -1,0 +1,2 @@
+page.replace "message-body", :partial => 'people/message', :object => @announcement
+page.visual_effect :highlight, "message-body"

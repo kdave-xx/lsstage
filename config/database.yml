@@ -1,0 +1,26 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  database: ls2_development
+  username: root
+  password: root
+
+
+test:
+  adapter: mysql
+  encoding: utf8
+  database: ls_test
+  username: root
+  password:
+  socket: /opt/local/var/run/mysql5/mysqld.sock
+
+previous:
+  adapter: mysql
+  encoding: utf8
+  database: logosauce_production
+  username: root
+  password:
+  socket: /opt/local/var/run/mysql5/mysqld.sock
+
+production:
+  development

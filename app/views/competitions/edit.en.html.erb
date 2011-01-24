@@ -1,0 +1,9 @@
+<% javascript 'competition_form.js' %>
+
+<h1>Edit competition</h1>
+<br />
+
+<% form_for @competition do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <%= f.submit 'Save' %>
+<% end %>

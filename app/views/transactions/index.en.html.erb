@@ -1,0 +1,26 @@
+<h1>Transaction List</h1>
+<hr />
+<table class="transactions">
+  <thead>
+    <tr>
+      <td>Kind</td>
+      <td>Amount</td>
+      <td>Transaction ID</td>
+      <td>Payer ID</td>
+      <td>Success</td>
+      <td>Timestamp</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+    <tr>
+      <td><%= h transaction.action %></td>
+      <td><%= number_to_currency transaction.amount_in_dollar %></td>
+      <td><%= transaction.references["transaction_id"] %></td>
+      <td><%= transaction.payer_id %></td>
+      <td><%= transaction.success? ? "Yes" : "No" %></td>
+      <td><%= transaction.created_at.to_s :long %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

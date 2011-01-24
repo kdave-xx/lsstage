@@ -1,0 +1,126 @@
+--- !ruby/object:Gem::Specification 
+name: money
+version: !ruby/object:Gem::Version 
+  hash: 9
+  prerelease: false
+  segments: 
+  - 3
+  - 1
+  - 5
+  version: 3.1.5
+platform: ruby
+authors: 
+- Tobias Luetke
+- Hongli Lai
+- Jeremy McNevin
+- Shane Emmons
+- Simone Carletti
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-10-08 00:00:00 +05:30
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: rspec
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: yard
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: json
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id003
+description: This library aids one in handling money and different currencies.
+email: 
+- hongli@phusion.nl
+- semmons99+RubyMoney@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/money/bank/base.rb
+- lib/money/bank/variable_exchange.rb
+- lib/money/core_extensions.rb
+- lib/money/currency.rb
+- lib/money/defaults.rb
+- lib/money/deprecations.rb
+- lib/money/money.rb
+- lib/money.rb
+- CHANGELOG.md
+- LICENSE
+- README.md
+has_rdoc: true
+homepage: http://money.rubyforge.org
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 23
+      segments: 
+      - 1
+      - 3
+      - 6
+      version: 1.3.6
+requirements: 
+- json if you plan to import/export rates formatted as json
+rubyforge_project: money
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Money and currency exchange support library.
+test_files: []
+

@@ -1,0 +1,28 @@
+<% if signed_in? %>
+<div class="new">
+ <a href="/logos/new" title="Add/Create/Upload a new logo">+ Upload a logo</a>
+</div> 
+<% end %>
+  
+
+  <div class="browse">
+  <h5>Browse by</h5>
+  <%= link_to "Tags", tags_logos_path %>
+  <br />
+  <% if signed_in? %>
+  <%= link_to 'My Faves', person_favourites_path(current_user) %>
+  <br />
+  <% end %>
+  <%= link_to 'Top Last 30days', logos_path(:order => 'score', :range => 'last_month') %>
+  <br />
+  <%= link_to 'Top All Time', logos_path(:order => 'score') %>
+</div>
+
+
+ <% if admin? %>
+  <div class="adminside"> 
+  <h5>Admin Task</h5>
+  <%= link_to 'Sold Logos' %>
+  </div>
+ <% end %>
+

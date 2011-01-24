@@ -1,0 +1,36 @@
+<% if can_see_bid?(bid) %>
+<div class="bid">
+	<div class="encapsulate">
+	  <div class="bidcount right">
+	    <h1><%= number_to_currency bid.price %></h1>
+	  </div>
+  
+	  <div class="left"> 
+	    <p><%= link_to h(bid.name),[bid.project, bid] %> (#<%= bid.id %>) <em>by</em> <%= link_to_person bid.person %></p>
+	  </div>
+          
+	</div>
+	
+	<p align="center">
+	    <% if @project.closed? %>
+	    <% if can_pick_bid?(bid) %>
+	    <%= link_to 'Pick as winner', won_project_bid_path(bid.project, bid), :method => :put, :confirm => 'Are you sure?' %>
+	    <% end %>
+	    <% if can_repick_bid?(bid) %>
+	    <%= link_to 'Re-pick winner', won_project_bid_path(bid.project, bid), :method => :put, :confirm => 'Are you sure?' %>
+	    <% end %>
+	    <% if bid.won? %>
+	      <%= link_to 'Reset winner', lost_project_bid_path(bid.project, bid), :method => :put, :confirm => 'Are you sure?' %>
+	    <% end %>
+	    <% end %>
+	</p>
+</div>
+<% else %>
+
+<div class="bid">
+  <strong>
+    Bid Submitted by : <%= link_to_person bid.person %>
+  </strong>
+</div>
+
+<% end %>

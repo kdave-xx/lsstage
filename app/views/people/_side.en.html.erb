@@ -1,0 +1,24 @@
+<% if signed_in? %>
+  <% else %>
+	<div class="new">
+	 <a href="/people/new">+ Sign-up (Free)</a>
+	</div>
+   
+  <% end %>
+  <div class="search">
+  <h5>Search people</h5>
+  <% form_tag people_path, :method => :get do %>
+    <%= hidden_field_tag :location, @location %>
+    <%= hidden_field_tag :kind, @kind %>
+    <div>
+      <%= text_field_tag :query, params[:query] %>
+     </div>
+    <div>
+      <label><%= radio_button_tag :order, 'date', params[:order] == 'date' %> Date</label>
+      <label><%= radio_button_tag :order, 'score', params[:order] == 'score' %> Score</label>
+      <label><%= radio_button_tag :order, 'view', params[:order] == 'view' %> View</label>
+    </div>
+    <%= submit_tag 'Search' %>
+  <% end %>
+ </div>
+ <%= render :partial => 'layouts/advert' %>

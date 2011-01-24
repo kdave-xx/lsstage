@@ -1,0 +1,46 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  session:
+    sign_up: Sign-up
+    sign_in: Sign-in
+    sign_out: Sign-out
+    sign_in_required: Please Login to view the page
+    sign_in_failed: Login failed
+    admin_required: Admin rights required
+  person:
+    edit_profile: edit profile
+    incorrect_old_password: You did not enter the correct current password, please try again.
+  logo:
+    flash:
+      new: Done
+      edit: Done
+      destroy: Done
+  entry:
+    flash:
+      withdraw: Entry withdrawn
+      error: Error processing request
+  competition:
+    flash: 
+      approve: Approved
+      edit: Done
+    pay:
+      title: Pay
+  project:
+    create:
+      flash:
+        done: Project created
+    edit:
+      flash:
+        done: Project updated
+  bid:
+    create:
+      flash:
+        done: Bid placed
+    lost:
+      flash:
+        done: Winner reset
+    won:
+      flash:
+        done: Winner picked

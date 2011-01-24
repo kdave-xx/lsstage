@@ -1,0 +1,19 @@
+<div class="clearfix">
+  <div id="onethird">
+    <%= render :partial => "sidemenu" %>
+    <!--add ad network or fusion type ad-->
+    <%= render :partial => 'layouts/advert' %>  
+  </div>
+
+
+  <div id="twothirds" class="clearfix">
+    <div class="resultsheader"><h2>Logo Sales</h2></div> 
+    <% @logos.each do |logo| %>
+      
+    <% end %>
+  </div>
+</div>
+
+<div class="paginate">
+ <%= will_paginate @logos %>
+</div>

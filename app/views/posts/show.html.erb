@@ -1,0 +1,84 @@
+<% content_for :help do %>
+ 
+ <h1>Blog help</h1>
+ <ul>
+	 <li>User Search to search blog posts by name, tag, article copy, etc.</li>
+	<li>Click the Tags link to virew the blog's tag cloud</li>
+	 <li>Click the Authors name to view the authors page</li>
+	 <li>If you're signed in you add a comment using the comment form</li>
+	 <li>You can view the pages of any commenter by clicking on their name</li>
+	
+ </ul>
+ 
+<% end %>
+ 
+ <% if admin? %>
+	<div class="adminside">
+	  <a href="posts/new">+ New Post</a> | 
+	  <%= link_to 'Blog Images', blog_images_path %>
+	</div>
+<% end %>
+		
+<div class="encapsulate">
+	<div class="left">		
+	</div>
+	<div class="right">
+		<div class="search">
+		  <% form_tag posts_path, :method => :get do %>
+		    <div>
+		      <span style="margin-right:20px;"><%= link_to 'Tags', tags_posts_path %> <%= text_field_tag :query, params[:query] %> <%= submit_tag 'Search', :title => 'Search blog posts' %>
+		    </div>
+		   
+		  <% end %>
+		</div>
+	</div>
+</div>
+
+<div class="encapsulate">
+<div class="resultsheader">
+		<h1>&nbsp;</h1>
+	</div>
+<div class="post">
+  <div class="posttitle encapsulate">
+   <div style="float:left;"><h2><%= h @post.name %> <a href="/posts/<%= @post.id %>/comments.rss" title="Get blog post comments via RSS"><img src="/images/rssfeed16x16.png" /></a></h2></div>
+   <div style="float:right;">
+    <% edit do %>
+      <p>
+      <%= link_to 'Edit', edit_post_path(@post) %>
+      <%= link_to 'Delete', @post, :method => :delete, :confirm => 'Are you sure?' %>
+    </p>
+   <% end %>
+  </div>
+  </div>
+  <p>
+    By <%= link_to_person @post.person %> <%= time_ago_in_words @post.created_at %> ago. 
+    Tagged: 
+    
+    <% @post.tags.each do |tag| %>
+	    <%= link_to h(tag.name), posts_path(:query => tag.name) %> .
+	  <% end %>
+	  
+  </p>
+    
+  
+  
+  <p>
+    <%= textilize @post.body %>
+  </p>
+</div>  
+  
+
+
+
+	<div id="feedback_posts" class="encapsulate comments">
+		<h3>Comments</h3>
+		<div id="comments">
+			<%= render @comments %>
+		</div>
+		
+	</div>
+	<div style="margin:20px 0px;">
+		  <%= render :partial => "comments/new", :locals => {:commentable => @post} %>
+		</div>
+
+</div>

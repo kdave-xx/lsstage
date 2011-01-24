@@ -1,0 +1,198 @@
+
+<%= f.error_messages %>
+
+<fieldset>
+  <legend><h2>1. Competition Name*</h2>Normally the logo or brand name.</legend>
+  <p>
+    <%= f.text_field :name %>
+  </p>
+</fieldset>
+
+
+<fieldset>
+  <legend><h3>1a. Sub Title</h3></legend>
+  <p>
+    <%= f.text_field :sub_title %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h2>2. Your brief*</h2></legend>
+  <p>
+    <%= f.text_area :description %><br />
+    Be as detailed as possible. Tell us aboutyour brand, who your target audience is and any specific requirements you have.
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h2>3. Your target audience*</h2></legend>
+  <p>
+    <%= f.text_area :target_audience %>
+  </p>
+</fieldset>
+
+
+
+<fieldset>
+  <legend><h2>4. Specific requirements</h2></legend>
+  <p>
+    <%= f.text_area :requirement %>
+  </p>
+</fieldset>
+
+
+<fieldset>
+  <legend><h2>5. Logo format</h2>What sort of logo would you prefer?</legend>
+  <p>
+    
+   <%= check_box_tag 'competition[logo_format][]', 'wordmark', f.object.logo_format.include?('wordmark') %><label>Wordmark</label> / 
+   <%= check_box_tag 'competition[logo_format][]', 'pictorial_mark', f.object.logo_format.include?('pictorial_mark') %><label>Pictorial Mark</label> / 
+   <%= check_box_tag 'competition[logo_format][]', 'abstract_mark', f.object.logo_format.include?('abstract_mark') %><label>Abstract Mark</label> / 
+   <%= check_box_tag 'competition[logo_format][]', 'emblem', f.object.logo_format.include?('emblem') %><label>Emblem</label> / 
+   <%= check_box_tag 'competition[logo_format][]', 'mascot', f.object.logo_format.include?('mascot') %><label>Mascot</label> / 
+   <%= check_box_tag 'competition[logo_format][]', 'web2', f.object.logo_format.include?('web2') %><label>Web2</label>  
+  </p>
+</fieldset>
+
+
+
+
+<fieldset>
+  <legend><h2>6. Where will your logo be used</h2></legend>
+  <p>
+    <%= check_box_tag 'competition[logo_use][]', 'web', f.object.logo_use.include?('web') %><label>Web</label> / 
+    <%= check_box_tag 'competition[logo_use][]', 'print', f.object.logo_use.include?('print') %><label>Print</label> / 
+    <%= check_box_tag 'competition[logo_use][]', 'tv_film', f.object.logo_use.include?('tv_film') %><label>TV/Film</label> / 
+    <%= check_box_tag 'competition[logo_use][]', 'branded_product', f.object.logo_use.include?('branded_product') %><label>Branded Product</label> / 
+    <%= check_box_tag 'competition[logo_use][]', 'promo_items', f.object.logo_use.include?('promo_items') %><label>Promo Items (pens, caps, etc)</label>
+  </p>
+</fieldset>
+
+
+
+
+<fieldset>
+ <h2>7. Competition dates*</h2>
+ You can select any length of competition. However we generally recommend 14 to 28 days. This will ensure that designers have time to think about and creates some great designs but not drag on so long that they become disinterested. If your competition is going to be less than 14 days or longer than 28 days, we recommend that you consider more prize-money.<br /><br /><em>Note: competitions start and end at midnight GMT time on the date selected.</em>
+ <br /><br /> 
+  <% f.with_options :include_blank => true do |d| %>
+    <p>
+      <%= f.label :open_on %>
+      <%= d.date_select :open_on %>
+    </p>
+    <p>
+      <%= f.label :close_on %>
+      <%= d.date_select :close_on %>
+    </p>
+  <% end %>
+</fieldset>
+
+  <h2>8. Prize Money (US$)*</h2>
+  <a class="pricing_option clearfix">
+    <div class="name">
+      <%= radio_button_tag 'pricing_option', '200' %>
+      Economy
+    </div>
+    <div class="description">
+      25 Entries Guaranteed 
+    </div>
+    <div class="prices clearfix">
+      <div class="award">$200</div>
+      <div class="price">$220</div>
+    </div>
+  </a>
+
+  <a class="pricing_option clearfix">
+    <div class="name">
+      <%= radio_button_tag 'pricing_option', '300' %>
+      Regular
+    </div>
+    <div class="description">
+      50 Entries Guaranteed 
+    </div>
+    <div class="prices clearfix">
+      <div class="award">$300</div>
+      <div class="price">$330</div>
+    </div>
+  </a>
+  
+  <a class="pricing_option clearfix">
+    <div class="name">
+      <%= radio_button_tag 'pricing_option', '500' %>
+      Blah
+    </div>
+    <div class="description">
+      75 Entries Guaranteed 
+    </div>
+    <div class="prices clearfix">
+      <div class="award">$500</div>
+      <div class="price">$550</div>
+    </div>
+  </a>
+  
+  <a class="pricing_option clearfix">
+    <div class="name">
+      <%= radio_button_tag 'pricing_option', '750' %>
+      Deluxe
+    </div>
+    <div class="description">
+      100 Entries Guaranteed
+    </div>
+    <div class="prices clearfix">
+      <div class="award">$750</div>
+      <div class="price">$825</div>
+    </div>
+  </a>
+  
+  <a class="pricing_option clearfix" id="custom_pricing_option">
+    <div class="name">
+      <%= radio_button_tag 'pricing_option', '0' %>
+      Custom
+    </div>
+    <div class="description">
+      Custom Price* 
+    </div>
+    <div class="prices clearfix">
+      <div class="custom" style="display: none;">
+        US$ <%= f.text_field :prize_value %>
+        <br />
+        "(Minimum US$200.00)"
+      </div>
+    </div>
+  </a>
+  <p>
+    The higher the prize-money you offer, the better the quality and quantity of entries you will receive:<br /><br />The minimum prize-money is US$200. However, if you offer more you will get substantially more entries from better designers and ultimately better results. We therefore recommend that you pay more than the minimum and consider that commissioning a design from a design company in the traditional way can cost many thousands of dollars.</p>
+  <p><strong>*Note:</strong> if you select <em>Custom Price</em> above and set your own prize value - we will respect the guaranteed minimum number of entries as per the pre-selected prize values. That is if you make your prize value $600, we will guarantee 75 entries as per the $500 level.</p>
+</fieldset>
+
+<h2>9. Admin fee</h2>
+<p>A <strong>10%</strong> admin fee is charged and added to your bill.</p>
+
+<fieldset style="padding-left:50px;">
+  <h3>9.1. PRIVATE competition (optional)</h3>
+  <p>You can optionally make your competition <em>Private</em>.<br /><br />An <strong>extra 10% fee</strong> applies.<br /><br />This essentially means that we set a "no-follow" for search engines so that when you "google" your brand name, it's more likely that you'll find your website. <em>Secondly</em> - we hide the logo competition page from users and the public. Only the competition owner, competition entrants and Logosauce admins will be able to see the page. When the competition closes the competition will no longer be visible.</p>
+  <p> 
+    <%= f.check_box :private %>
+    <%= f.label :private, "<strong>Yes</strong>, I'd like to pay the <em>extra 10%</em> and make my competition <em>PRIVATE</em>." %>
+  </p>
+  <br />
+</fieldset>
+
+<div class="group">
+  		<h2>10. Review and Agree*</h2>	
+  		<p>
+  		  All competitions and submissions must comply with these rules. 
+  		  <%= 
+  		    link_to_function '(View Rules +/-)' do |page| 
+  		      page << "Effect.toggle('all_info', 'slide')"
+  	      end
+  		  %>
+      </p>
+  		<div id="all_info" style="display: none; padding: 5px">
+    		<%= render :partial => 'site/competitionrules' %>
+  		</div>	
+		
+</div>
+
+
+

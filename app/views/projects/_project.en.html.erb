@@ -1,0 +1,24 @@
+<% if project.viewable?(current_user) %>
+<div class="project">
+  <h5>
+    <%= link_to h(project.name), project %>
+  </h5>
+  <%= textilize truncate(project.brief, 75) %>
+
+  <% if can_edit?(project) %>
+    <%= link_to 'Edit', edit_project_path(project) %>
+  <% end %>
+  
+  <%= link_to 'Read more...', project %>
+  
+</div>
+<% else %>
+<div class="project">
+  <h5>
+    This is a <em>Private Project</em> and is visible to Pro Designers only. 
+  </h5>
+  To view you need to be a <a href="/faq#pro">Pro!</a>
+  
+</div>
+
+<% end %>

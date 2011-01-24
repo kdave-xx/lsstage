@@ -1,0 +1,16 @@
+--- 
+address: 0.0.0.0
+pid: tmp/pids/thin.pid
+port: 8900
+timeout: 30
+log: log/thin.log
+max_conns: 1024
+require: []
+user: deploy
+group: deploy
+
+environment: production
+max_persistent_conns: 512
+servers: 2
+daemonize: true
+chdir: /home/deploy/apps/logosauce/current/

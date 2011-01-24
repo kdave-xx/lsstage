@@ -1,0 +1,52 @@
+<%= f.error_messages %>
+
+<fieldset>
+  <legend><h2>Name*</h2></legend>
+  <p>
+    <%= f.text_field :name %>
+  </p>
+  <legend><h2>Brief*</h2></legend>
+  <p>
+    <%= f.text_area :brief %><br />
+  	Be as detailed as possible. Tell designers about your brand, who your target audience is and any specific requirements you have.
+  </p>
+  
+</fieldset>
+
+<!--<fieldset>
+  <legend>Permission</legend>
+  <p>
+    <%# Project::PERMISSION.each do |key, value| %>
+      <%#*<label>%>
+        <%#= f.radio_button :permission, value %>
+        <%#= key.to_s.humanize %>
+      <%#*</label>%>
+    <%# end %>
+  </p>
+ 
+</fieldset>-->
+
+
+<fieldset>
+  <legend>Deadline for bids*</legend>
+  <p>
+    <%= f.date_select :deadline, :start_year => Date.current.year %>
+  </p>
+</fieldset>
+
+<div class="group">
+  		<h2>Review & Agree*</h2>	
+  		<p>
+  		  All projects and bids must comply with these rules. 
+  		  <%= 
+  		    link_to_function '(View Rules +/-)' do |page| 
+  		      page << "Effect.toggle('all_info', 'slide')"
+  	      end
+  		  %>
+      </p>
+  		<div id="all_info" style="display: none; padding: 5px">
+    		<%= render :partial => 'site/projectbidrules' %>
+  		</div>	
+		
+</div>
+

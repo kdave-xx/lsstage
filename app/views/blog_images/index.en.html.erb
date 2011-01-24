@@ -1,0 +1,11 @@
+<h1>List of Blog Images</h1>
+
+<div>
+  <% @blog_images.each do |image| %>
+    <%= link_to image_tag(image.document.url(:thumb)), blog_image_path(image) %>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to 'Upload New Image', new_blog_image_path %>
+</div>

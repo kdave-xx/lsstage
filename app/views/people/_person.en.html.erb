@@ -1,0 +1,26 @@
+<a href="<%= person_path(person) %>">
+  <div class="person">
+    <p class="person_title">
+      <%= h(person.nick_name) %>
+      <br />
+      <% if person.kind.eql?(5) %>
+      Spend: <%= number_to_currency person.total_spent_money, :precision => 0 %>
+      <% else %>
+      Score:
+      <%= person.statistic.try(:score) %>
+      <% end %>
+    </p>
+    
+    <div class="person_image">
+      <% unless person.avatar_file_name.blank? %>
+      <%= image_tag(person.avatar.url(:thumb), :class => 'person_popup', :alt => person.id) %>
+      <% else %>
+        <% if person.kind.eql?(5) %>
+       <%= image_tag("avatars/client_thumb.gif", :class => 'person_popup', :alt => person.id) %>
+       <% else %>
+      <%= image_tag("avatars/default_thumb.gif", :class => 'person_popup', :alt => person.id) %>
+       <% end %>
+      <% end %>
+    </div>
+  </div>
+</a>

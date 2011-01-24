@@ -1,0 +1,46 @@
+<% content_for :help do %>
+ 
+ <h1>Blog help</h1>
+ <ul>
+	 <li>User Search to search blog posts by name, tag, article copy, etc.</li>
+	 <li>Click the Tags link to virew the blog's tag cloud</li>
+	 <li>Click read more to read the full post</li>
+	 <li>Click the Authors name to view the authors page</li>
+	 <li>Permalink can be copied and used for external links OR click it to view the post in full</li>
+ </ul>
+ 
+ <% end %>
+
+
+<% if admin? %>
+	<div class="adminside">
+	  <a href="posts/new">+ New Post</a> | 
+	  <%= link_to 'Blog Images', blog_images_path %>
+	</div>
+<% end %>
+		
+<div class="encapsulate">
+	<div class="left">
+		
+	</div>
+	<div class="right">
+		<div class="search">
+		  <% form_tag posts_path, :method => :get do %>
+		    <div>
+		      <span style="margin-right:20px;"><%= link_to 'Tags', tags_posts_path %></span> <%= text_field_tag :query, params[:query] %> <%= submit_tag 'Search', :title => 'Search blog posts' %>
+		    </div>
+		   
+		  <% end %>
+		</div>
+	</div>
+</div>
+
+<div class="encapsulate">
+	<div class="resultsheader">
+		<h1>Posts <a class="rss" href="/posts.rss" title="Get Blog posts via RSS"><img src="images/rssfeed16x16.png" /></a></h1>
+	</div>
+	<div>
+		<%= render @posts %>
+	</div>
+	<div class="paginate"><%= will_paginate @posts %></div>
+</div>

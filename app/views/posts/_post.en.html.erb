@@ -1,0 +1,19 @@
+<div class="post encpasulate">
+  <div class="post_tab" style="float:left; width:100px; border-right: dotted 1px #ccc;height:auto !important; text-align:center; padding:5px;">
+  <p><%= pluralize post.comments.size, 'comments' %></p>
+  <p><%= link_to_person post.person %><br />AUTHOR</p>
+  <p><%= time_ago_in_words post.created_at %> ago</p>
+  <p><%= link_to('PERMALINK', post_path(post)) %></p>
+  </div>
+  <div class="post_excerpt" style="margin-left:120px; padding:5px;">
+   <div class="posttitle">
+    <h2><%= h post.name %></h2>
+   </div>
+   <p>
+    <%= textilize post.excerpt %>
+    <%= link_to 'Read More...', post %>
+  </p>
+  
+  </div>
+  
+</div>

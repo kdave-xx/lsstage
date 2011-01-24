@@ -1,0 +1,14 @@
+<% if admin? %>
+<div class="adminside">
+  <h5>Competition Admin</h5>
+  <%= link_to 'Unpaid', unpaid_competitions_path %>
+  <br />
+  <%= link_to 'Unapproved', unapproved_competitions_path %>
+  <br />
+  <%= link_to 'Client Unpaid', client_unpaid_competitions_path %>
+  <br />
+  <%= link_to 'Client Paid', client_paid_competitions_path %>
+  <br />
+  
+</div>
+<% end %>

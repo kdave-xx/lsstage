@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Logosauce</title>
+    <%= stylesheet_link_tag 'prototip' %>
+    <%= stylesheet_link_tag 'reset' %>
+    <%= stylesheet_link_tag 'main' %>
+    <%= stylesheet_link_tag 'text' %>
+    <%= javascript_include_tag 'prototype' %>
+    <%= javascript_include_tag 'effects' %>
+    <%= javascript_include_tag 'prototip' %>
+    <%= javascript_include_tag 'jquery-1.3.2.min' %>
+
+    <script type="text/javascript">
+   jQuery.noConflict();
+   </script>
+
+
+    <%= javascript_include_tag 'application' %>
+    <%= yield :head %>
+
+  </head>
+  <body>
+<div id="wrapper">
+ <div id="ad">
+    <%= render :partial => 'site/ad' %>
+ </div>
+
+ <div id="eseetag_outer">
+  <div id="eseetag_inner" class="encapsulate">
+   <div class="left"><a href="/" title="Click to return to the Logosauce home page"><img src="/images/logosaucelogo.gif" width="130px" /></a></div>
+   <div class="middle"> <%= link_to 'Oozing logo goodness', oozing_path, :title => 'We love logos and we would like you to join us in celebrating them. Learn more about what Logosauce can do for you.' %> | <%= link_to 'Find a logo designer', findadesigner_path, :title => 'Find a designer for your next logo, you can view hundreds of designers portfolios or advertise your next project. We show you how easy it is.' %> | <%= link_to 'Run a design contest', getalogo_path, :title => 'Start a logo design competition or a logo design contest. Access hundreds of logo designers from around the globe via Logosauce crowd-sourcing.' %> | <%= link_to 'Find design clients', findaclient_path, :title => "If you're a designer you can find new clients and projects to work on in variety of ways. Click here to see how" %></div>
+   <div class="right" style="width:45px;"><a href="http://www.e-see.co.nz" title="Logosauce is from e-see&reg; - click to visit the e-see&reg; website."><img src="/images/eseelogo1.png" width="45px" /></a></div>
+  </div>
+ </div>
+
+ <div id="topouter" class="encapsulate">
+<div id="top">
+<div id="logo">
+<a href="/" title="click to return home"><img src="/images/logo.gif" width="200px" height="52px" /></a>
+</div>
+<div id="login" class="encapsulate">
+<%= link_to_toggle_help %>
+<% if signed_in? %>
+<%= link_to t('session.sign_out'), session_path, :method => :delete %>
+<em>Welcome back</em> <%=link_to current_user.nick_name, person_path(current_user), :class => 'welcome', :title => 'Click to view your profile page, where you can edit your details and upload additional logos' %>
+<% else %>
+<%= link_to t('session.sign_up'), new_person_path %> <%= link_to t('session.sign_in'), new_session_path %>
+<% end %>
+         </div>
+<div id="tabmenu" class="encapsulate">
+<%= render :partial => 'shared/tabmenu' %>
+</div>
+</div>
+  </div>
+
+    <div id="help_slide_down" style="display: none;">
+      <div>
+        <%= yield :help %>
+        <p class="helpbuttons">
+         <%= link_to 'I need more help. Take me to the Help Centre! ' + image_tag('help.png'), :controller => 'site', :action => 'help' %>
+         <%= link_to_function 'Close Help ' + image_tag('arrow_up.png'), "Effect.BlindUp($(this).up('div#help_slide_down'))" %>
+        </p>
+      </div>
+    </div>
+
+    <div id="about_slide_down" style="display: none;">
+<div>
+<%= render :partial => 'site/homeabout' %>
+<p class="aboutbuttons">
+<%= link_to 'Learn more ' + image_tag('help.png'), :controller => 'site', :action => 'oozing' %>
+<%= link_to_function 'Close ' + image_tag('arrow_up.png'), "Effect.BlindUp($(this).up('div#about_slide_down'))" %>
+</p>
+        </div>
+    </div>
+
+  <% if signed_in? %>
+    <% announce = Announcement.last %>
+    <% unless admin? %>
+      <% unless announce.nil? %>
+        <% if !announce.people.exists?(current_user) %>
+          <div id="announcement_slide_down">
+            <div id="announcement_inner">
+              <h2>Announcement</h2>
+              <p><%= textilize announce.try(:message) %></p>
+              <p class="helpbuttons">
+                <%= link_to_remote 'OK, I have read it' + image_tag('arrow_up.png'), :url => announcement_url(:id => announce.id), :with => "Effect.BlindUp($(this).up('div#announcement_slide_down'))" %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+    <div id="pageouter">
+    <div id="page">
+
+      <div id="message">
+        <%= message %>
+        </div>
+
+
+      <div id="content">
+        <div id="main">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footerrip"></div>
+  <div id="footer" class="encapsulate">
+
+   <div id="inner_footer" class="encapsulate">
+
+        <div class="left" style="margin-right:50px;">
+          <h1>About</h1>
+          <%= link_to 'Oozing logo goodness', oozing_path %><br />
+          <%= link_to 'Find a designer', findadesigner_path %><br />
+          <%= link_to 'Get a new logo', getalogo_path %><br />
+          <%= link_to 'Find a client', findaclient_path %><br />
+          <%= link_to 'Who/Mission', about_path %><br />
+          <%= link_to 'The bottle', thebottle_path %>
+
+        </div>
+
+<div class="left" style="margin-right:50px;">
+         <h1>Connect</h1>
+         <p><a href="contact" title="Visit the Logosauce contact page"><img src="/images/phonefooter.gif" alt="phonefooter" width="20" height="20" /> Contact us</a><br />
+         <a href="http://twitter.com/logosauce" title="Follow Logosauce on Twitter"><img src="/images/twitterfooter.gif" alt="twitterfooter" width="20" height="20" /> Follow us</a><br />
+         <a href="http://logosauce.brandfm.com" target="_blank" title="Click to visit the Logosauce brand file and media library"><img src="/images/brandfmfooter.gif" alt="brandfmfooter" width="20" height="20" /> Download us</a><br /><a href="getnews" title="Subscribe to get Logosauce news by email"><img src="/images/newsletters.gif" alt="newslettericon" width="20" height="20" /> Get News</a></p>
+
+        </div>
+
+        <div class="left" style="margin-right:50px;">
+        <h1>Info</h1>
+         <%= link_to 'Help Centre', help_path %><br />
+         <%= link_to 'Blog', posts_path %><br />
+         <%= link_to 'Pricing', pricing_path %><br />
+         <%= link_to 'Advertising', advertising_path %><br />
+         <!--<li><%= link_to 'Tour', tour_path %></li>-->
+        </div>
+
+        <div class="right">
+<h1>&copy;</h1>
+<p>Copyright 2006 - 2010 Logosauce&trade;<br />All logos are the &copy; of their respective owners. <br />Logosauce is a global service made in New Zealand. <br />All rights reserved.</p>
+
+<p><%= link_to 'Terms of Use', terms_path %></li> | <%= link_to 'Privacy Policy', privacy_path %></p>
+
+
+        </div>
+
+    </div>
+
+    <!-- twitter follow badge by go2web20 -->
+<!-- end of twitter follow badge -->
+</div>
+</div>
+</body>
+</html>

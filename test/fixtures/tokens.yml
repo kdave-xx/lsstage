@@ -1,0 +1,11 @@
+jack_token:
+  secret: <%= Token.token_hash %>
+  ip: 123.123.123.122
+  expire: <%= 3.days.ago %>
+  person: jack
+  
+locke_token:
+  secret: <%= Token.token_hash %>
+  ip: 123.123.123.11
+  expire: <%= 1.year.from_now.to_date %>
+  person: locke

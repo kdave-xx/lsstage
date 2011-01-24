@@ -1,0 +1,109 @@
+<% javascript 'logo' %>
+
+<%= f.error_messages %>
+
+<fieldset>
+  <legend>File*</legend>
+  <%= f.file_field :image %>
+</fieldset>
+<br /><br />
+<fieldset>
+  <legend>Purpose for upload.*</legend>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:profile], :id => 'logo_kind_profile' %>
+    Portfolio
+  </label>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:competition_entry], :id => 'logo_kind_competition' %>
+    Competition Entry
+  </label>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:project_entry], :id => 'logo_kind_project' %>
+    Project Entry
+  </label>
+  <br />
+  <p><em>Note: All uploads (including competition and project entries) will appear in your Portfolio.</em></p>
+</fieldset>
+
+<br /><br />
+
+<fieldset>
+  <legend>Information</legend>
+  
+  <div>
+    <%= f.label :name, 'Logo Name*' %>
+    <%= f.text_field :name %>
+   <br />
+    <%= f.label :strapline, 'Strapline' %>
+    <%= f.text_field :strapline %>
+  </div>
+  
+  <div>
+    <%= f.label :brand_name, 'Brand Name' %>
+    <%= f.text_field :brand_name %>
+   <br />
+    <%= f.label :brand_owner, 'Brand Owner' %>
+    <%= f.text_field :brand_owner %>
+  </div>
+  
+  <div>
+    <%= f.label :year_first_used, t('logo.form.year_first_used') %>
+    <%= f.select :year_first_used, Logo::YEAR_OPTIONS, :include_blank => true %>
+  
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>For Sale</legend>
+  
+  <div>
+    <%= f.label :for_sale, 'For Sale?' %>
+    <%= f.check_box :for_sale %>
+  </div>
+  
+  <div>
+    <%= f.label :price, 'Price' %>
+    <%= f.text_field :price %>
+  </div>
+  
+  <div>
+    <%= f.label :sale_description, 'Sale Description' %>
+    <%= f.text_area :sale_description %>
+  </div>
+  
+  <div>
+    <%= f.label :artwork %>
+    <% f.fields_for :artwork, artwork_for_form(f) do |a| %>
+      <%= a.file_field :document  %>
+    <% end %>
+  </div>
+</fieldset>
+
+<fieldset id="competition" style="display: none;">
+  <legend>Competition</legend>
+  <%= f.label :competition, t('logo.form.competition') %>
+  <%= f.select :competition_id, Competition.current.all.map { |c| [h(c.name), c.id] }, :include_blank => true %>
+
+  <%= f.check_box :competition_viewable %>
+  <%= f.label :competition_viewable, t('logo.form.competition_viewable') %>
+</fieldset>
+
+<fieldset>
+  <legend>Access</legend>
+  <%= f.label :access, t('logo.form.access') %>
+  <%= f.text_field :access %>
+
+  <%= f.label :access_website, t('logo.form.access_website') %>
+  <%= f.text_field :access_website %>
+</fieldset>
+
+<fieldset>
+  <legend>Description</legend>
+  <%= f.text_area :description %>
+</fieldset>
+
+<fieldset>
+  <legend>Tags</legend>
+  <em>Describe your design with Tags to help users find your work.You must supply at least 3 comma separated tags (e.g. red, eagle, icon).</em>
+  <%= f.text_field :tag_list %>
+</fieldset>

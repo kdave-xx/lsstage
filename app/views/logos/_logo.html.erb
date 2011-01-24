@@ -1,0 +1,43 @@
+
+<%# if AmazonS3Asset.new.exists?("logosauce-live", logo.image.path(:original)) %>
+<% size ||= :thumb %>
+<% show_private ||= false %>
+
+
+<% if logo.viewable?(current_user) %>
+
+<a href="<%= logo_path(logo) %>">
+  
+  <div class="logo">
+       <p class="logo_title">
+      <%= h logo.name %>
+      <br />
+      by: <%= h logo.person.nick_name %>
+    </p>
+    
+    <div class="logo_image">
+      <%# if AmazonS3Asset.new.exists?("logosauce-live", logo.image.path) %>
+            <%= image_tag(logo.image.url(size), :alt => logo.id) %>
+      <%# else %>
+        <%#= image_tag("thumb/missing.png") %>
+      <%# end %>
+    </div>
+    
+  </div>
+</a>
+
+<% elsif show_private %>
+  <div class="logo">
+    <p class="logo_title">
+      <strong><%= h logo.name %> </strong>
+      <br />
+      <strong>by: <%= h logo.person.nick_name %></strong>
+    </p>
+    
+    <div class="logo_image">
+      Private Logo
+    </div>
+  </div>
+<% end %>
+<%# end %>
+

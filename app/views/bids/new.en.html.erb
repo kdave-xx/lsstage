@@ -1,0 +1,14 @@
+<% content_for :help do %>
+ <h1>Help with Projects</h1>
+ 
+ <p>Projects are the opposite of competitions. With a <em>Project</em> the aim is to select and commission a single freelance designer for a design project. Designers can place closed(private bids).</p>
+ <p>The winning bid will be displayed on the project page and be added to the designers total earnings statistics that appear on the designers Profile page. Designers may also choose to display the artwork/designs from the project in their Logosauce profile.</p>
+<% end %> 
+
+<h1>New Bid</h1>
+
+<% form_for [@project, @bid], :html => { :multipart => true } do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <br />
+  <%= f.submit 'Agree & Submit Bid!' %>
+<% end %>

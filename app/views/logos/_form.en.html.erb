@@ -1,0 +1,115 @@
+<% javascript 'logo' %>
+<%= f.error_messages %>
+
+<fieldset>
+  <legend><h2>Prepare and upload your File*</h2></legend>
+  <%= f.file_field :image %>
+  <p>Please upload a JPG/JPEG of your logo with dimensions of 640x640 for best results. Create a canvas of 640 x 640px with whatever colour background you prefer. Paste your logo design onto the canvas and save-for-web as a JPG.</p>
+</fieldset>
+
+<fieldset>
+<label><h2>Name it*</h2></label>
+<div>
+    <%= f.label :name, 'Logo name' %><br />
+    <%= f.text_field :name %><br />
+</div> 
+</fieldset>
+
+<br />
+<fieldset>
+  <legend><h2>Decide where it goes*</h2></legend>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:profile], :id => 'logo_kind_profile' %>
+    My Portfolio
+  </label>
+  <br />
+  <% @compitions =  Competition.current.all %>
+  <% unless @compitions.blank? %>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:competition_entry], :id => 'logo_kind_competition' %>
+    Competition Entry (will appear in competition entries but not your portfolio)
+  </label>
+  <% else %>
+  <label>
+    <%= f.radio_button :kind, Logo::KIND[:competition_entry], :id => 'logo_kind_competition', :disabled => true %>
+    Competition Entry (will appear in competition entries but not your portfolio)
+  </label>
+  <% end %>
+</fieldset>
+<br />
+
+<fieldset id="portfolio" style="display:none">
+  <legend><h2>Logo &amp; Brand details</h2></legend>
+  
+  <div>
+    <%= f.label :strapline, 'Strapline' %><br />
+    <%= f.text_field :strapline %><br /><br />
+  </div>
+  
+  <div>
+    <%= f.label :brand_name, 'Brand Name' %><br />
+    <%= f.text_field :brand_name %>
+   <br /><br />
+    <%= f.label :brand_owner, 'Brand Owner/Client' %><br />
+    <%= f.text_field :brand_owner %><br /><br />
+  </div>
+    
+</fieldset>
+
+<fieldset id="forsale">
+  <legend><h2>For Sale</h2></legend>
+  <p>If this logo is suitable for sale, then you can advertise it for sale here. </p>
+  <div>
+    <%= f.label :for_sale, 'For Sale?' %>
+    <%= f.check_box :for_sale %>
+  </div>
+  <div id="forsale_detail">
+  <p>The logo will be appear in your Portfolio but be marked as For Sale. Logosauce users can then buy the design at the Price you record below.At that time all Intellectual Property in the design transfers to the buyer. Logosauce will collect the money for you and deduct a sales commisison of 10% before paying out to your Paypal account. All logo sales are subject to the following <a href="">Rules and Conditions of Sale</a>.</p>
+    <div>
+      <%= f.label :price, 'Price' %><br />
+      <%= f.text_field :price %>
+    </div>
+    <br />
+    <div>
+      <%= f.label :sale_description, 'Sale Description' %><br />
+      <%= f.text_area :sale_description %>
+    </div>
+   <br />
+    <div>
+      <%= f.label :artwork %><br />
+       <% f.fields_for :artwork, artwork_for_form(f) do |a| %>
+        <%= a.file_field :document  %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset id="competition" style="display: none;">
+  <legend><h2>Select a competition</h2></legend>
+  <%= f.label :competition, 'Competition'%>
+  <%= f.select :competition_id, Competition.current.all.map { |c| [h(c.name), c.id] }, :include_blank => true %>
+
+  <%= f.check_box :hide_in_competition %>
+  <%= f.label :hide_in_competition, 'Hide entry before close' %>
+</fieldset>
+<br />
+<fieldset id="project" style="display:none;">
+<legend><h2>Select a project</h2></legend>
+
+</fieldset>
+<br />
+
+
+<fieldset id="notes">
+  <legend><h2>Describe it with notes and/or a description.</h2></legend>
+  <br />
+  <%= f.text_area :description %>
+</fieldset>
+
+<fieldset id="tags">
+  <legend><h2>Tag it - so people can find it*</h2></legend>
+  
+  <%= f.text_field :tag_list %>
+  <br />
+  <em>Describe your design with Tags to help users find your work.You must supply at least 3 comma separated tags (e.g. red, eagle, icon).</em>
+</fieldset>

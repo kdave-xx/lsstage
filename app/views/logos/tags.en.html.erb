@@ -1,0 +1,18 @@
+<% content_for :help do %>
+ <h1>Help with the Tag Cloud</h1>
+ <p>Tags are added to logos when they are uploaded to help describe them and to help other users find them. All those tags are displayed here on the Tag cloud page.</p>
+ <ul>
+   <li>Larger tags are more popular - i.e used more often to describe a logo.</li>
+   <li>Tags are arranged alphabetically.</li>
+   <li>Click a Tag to view all logos with that Tag.</li>
+ </ul>
+<% end %>
+
+
+<div class="encapsulate"> 
+  
+  <h1>Logosauce tag cloud</h1>
+<% tag_cloud @tags, %w(tag1 tag2 tag3 tag4) do |tag, css_class| %>
+  <%= link_to h(tag.name), logos_path(:query => h(tag.name)), :class => css_class %>
+<% end %>
+</div>

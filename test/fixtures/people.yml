@@ -1,0 +1,24 @@
+ruitaosu:
+  last_name: Su
+  first_name: Ruitao
+  nick_name: ruitaosu
+  email: ruitao@chingwide.com
+  password_hash: <%= Person.hash_password 'password', 'salt' %>
+  password_salt: salt
+  
+jack:
+  last_name: S
+  first_name: Jack
+  nick_name: jacks
+  email: jack@lost.com
+  password_hash: <%= Person.hash_password 'password', 'salt' %>
+  password_salt: salt
+
+locke:
+  last_name: J
+  first_name: Locke
+  nick_name: lockej
+  email: locke@lost.com
+  password_hash: <%= Person.hash_password 'password', 'salt' %>
+  password_salt: salt
+  

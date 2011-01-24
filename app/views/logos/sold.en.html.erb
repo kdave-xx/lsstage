@@ -1,0 +1,10 @@
+<h1>Sold!!!!</h1>
+
+<% if @logo.artwork %>
+  <h1>Existing Artwork</h1>
+  <%= link_to h(@logo.artwork.document.original_filename), logo_artwork_path(@logo) %></span>
+  <span class="filesize">
+  (<%= number_to_human_size @logo.artwork.document.size %> / <%= @logo.artwork.document_updated_at %>)
+  </span>
+  <hr />
+<% end %>

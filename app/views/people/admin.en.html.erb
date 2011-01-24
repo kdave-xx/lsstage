@@ -1,0 +1,15 @@
+<h1>Admin: <%= h @person.full_name %></h1>
+<hr />
+
+<% form_for @person, :url => admin_person_path(@person), :method => :put do |f| %>
+  
+  <%= f.error_messages %>
+  
+  <fieldset>
+    Kind: <%= f.select :kind, Person::KIND, :include_blank => true %>
+  </fieldset>
+  <hr />
+  <fieldset>
+    <%= f.submit 'Save' %>
+  </fieldset>
+<% end %>

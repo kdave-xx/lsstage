@@ -1,0 +1,118 @@
+<h1>Edit your user profile</h1>
+
+<% if @person.can_upgrade? %>
+  <h2><%= link_to 'Upgrade to pro designer', pay_person_path(@person) %></h2>
+<% end %>
+
+<div class="encapsulate">
+<div class="left">
+<% form_for @person, :html => {:multipart => true} do |f| %>
+  <%= f.error_messages %>
+  
+  <h2>Avatar</h2>
+   <p>Prepare and upload a 100 x100px avatar image<br />
+   (or do nothing and use the default Logosauce 'Saucy' avatar).</p>
+  <fieldset>
+    <%= image_tag @person.avatar.url(:thumb) %><br />
+  </fieldset>
+  
+  <fieldset>
+    <%= f.file_field :avatar %>
+  </fieldset>
+  
+  <fieldset>
+    <%= link_to 'Reset Avatar', reset_avatar_person_path(@person), :method => :put, :confirm => 'Are you sure?' %>
+  </fieldset>
+  
+ 
+  
+  <h2>The essentials</h2>
+  <fieldset>
+    <%= f.label :nick_name, "Nick name:" %>*<br />
+    <%= f.text_field :nick_name %>
+    <br />
+    <%= f.label :first_name, "First name:" %>*<br />
+    <%= f.text_field :first_name %>
+  <br />
+    <%= f.label :last_name, "Last name:" %>*<br />
+    <%= f.text_field :last_name %>  
+  </fieldset>
+  
+  <fieldset>
+    <%= f.label :email, "Email:" %>*<br />
+    <%= f.password_field :email %>
+      </fieldset>
+  
+  <% fields_for @profile do |p| %>
+  <h3>Location Details</h3>
+  <fieldset>
+    <%= p.label :location, 'Location:' %> (e.g. city/town/state)<br />
+    <%= p.text_field :location %>
+    <br />
+    <%= p.label :country, 'Country:' %><br />
+    <%= p.country_select :country, ["United States", "New Zealand", "Australia"], :include_blank => true %>
+  </fieldset>
+  
+  <fieldset>
+    <%= p.label :biography, 'Biography:' %><br />
+    <%= p.text_area :biography %>
+  </fieldset>
+  
+  <% end %> 
+  
+  <br /><br />
+  <h2>Password Settings</h2>
+  <fieldset>
+    <%= f.label :old_password, "Old password:" %><br />
+    <%= f.password_field :old_password %>
+    <br /> 
+    <%= f.label :password, "Password:" %><br />
+    <%= f.password_field :password %>
+    <br />
+    <%= f.label :password_confirmation, "Password confirmation" %><br />
+    <%= f.password_field :password_confirmation %>  
+  </fieldset>
+  
+  
+ </div>
+ <div class="right" style="text-align:left;"> 
+  
+  <% fields_for @profile do |p| %>
+    <h3>Social &amp; Payment Integration</h3>
+    <fieldset>
+      <%= f.label :paypal_account, "Paypal:" %><br />
+      <%= f.password_field :paypal_account %>
+      <br /> 
+      <p>You must record a Paypal account address if you wish to enter<br />competitions or projects.</p>
+      <br />
+      <%= p.label :facebook , 'Facebook:'%><br />
+      <%= p.text_field :facebook %><br />
+      
+      <%= p.label :twitter, 'Twitter:' %><br />
+      <%= p.text_field :twitter %>
+    </fieldset>
+    
+    
+<h3>Company Details (if applicable)</h3>
+    <fieldset>
+      <%= p.label :company, 'Company:' %><br />
+      <%= p.text_field :company %>
+      <br />
+      <%= p.label :company_website, 'Company website:' %><br />
+      <%= p.text_field :company_website %>
+      <br />
+      <%= p.label :company_website, 'Company size:' %><br />
+      <%= p.text_field :company_size %>
+ 
+
+    </fieldset>
+    
+  <% end %>
+  </div>
+  </div>
+  <br />
+  <fieldset>
+    <%= f.submit 'Save Changes' %>
+  </fieldset>
+<% end %>
+<p align="right"><%= link_to "Cancel my account", deactivate_url(@person) %></p>

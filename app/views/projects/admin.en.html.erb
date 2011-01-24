@@ -1,0 +1,18 @@
+<h1>Admin: <%= h @project.name %></h1>
+<hr />
+
+<% form_for @project, :url => admin_project_path(@project), :method => :put do |f| %>
+  
+  <%= f.error_messages %>
+  
+  <fieldset>
+    Approved: <%= f.check_box :approved %>
+    <br />
+    Status: <%= f.select :status, Project::STATUS, :include_blank => true %>
+  </fieldset>
+
+  <hr />
+  <fieldset>
+    <%= f.submit 'Save' %>
+  </fieldset>
+<% end %>

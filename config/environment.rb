@@ -1,0 +1,19 @@
+RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
+
+require File.join(File.dirname(__FILE__), 'boot')
+
+Rails::Initializer.run do |config|
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'rmagick', :lib => "RMagick2" 
+  config.gem 'RedCloth'
+  config.gem 'money'
+  config.gem "activemerchant", :lib => "active_merchant"
+  config.gem 'whenever', :lib => false, :version => '>= 0.1.7', :source => 'http://gems.github.com'
+  config.gem "websolr-acts_as_solr"
+  config.gem "capistrano"
+  config.time_zone = 'UTC'
+  config.action_controller.session = {
+    :session_key => '_ls_session',
+    :secret      => '5c038115cfa08b7ddff45a59d48249a0220b1692b284916c05fb745032f31f738371a267b41ed9078894103c02ba5646a08121d30a7397a576e3d44e0cd2459d'
+  }
+end

@@ -1,0 +1,9 @@
+<% if admin? %>
+<div class="adminside">
+  <h5>Project</h5>
+  <%= link_to 'unpaid', unpaid_projects_path %>
+  <br />
+  <%= link_to 'unapproved', unapproved_projects_path %>
+  <br />
+</div>
+<% end %>

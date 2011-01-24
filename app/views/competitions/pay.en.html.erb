@@ -1,0 +1,24 @@
+<h1>Total</h1>
+<hr />
+<p>
+  Prize-money: US<%= number_to_currency @competition.prize_value %><br />
+  Fees: US<%= number_to_currency @competition.fee %><br /><br />
+ 
+  <strong>Total: US<%= number_to_currency @competition.total_fee %></strong>
+</p>
+
+<h1>Pay and Submit</h1>
+<hr />
+
+<p>We guarantee payments to competition winners. Therefore payment of prize-money and fees is required up-front and funds are held in trust by Logosauce - until you select a winner at the end of the competition period. All competitions also require approval prior to going live on the site. If we do not approve your competition for whatever reason, we will refund the full value of your prize-money and fees. Once the competition starts, there are no refunds and you must select a winner within 14 days of the end of the competition.<br /><br />PAYPAL - all payments for competition fees and payment of prize-money to winners is done using the <a href="http://paypal.com">Paypal</a> service. You can pay competition prize-money and fees with Paypal funds or a Visa or MasterCard credit card. Payments to competition winners is by Paypal only.</p>
+<br />
+
+  
+<% form_tag pay_competition_path(@competition), :method => :put do %>
+  <%= submit_tag 'Pay' %>
+<% end %>
+
+<br />
+<p>
+  <em>NOTE: Your competition needs to be approved by Logosauce before it appears. You will be notified by email when this happens. Please allow up to 1 business day for approvals. However if you are at all concerned about the delay please contact us.</em>
+</p>

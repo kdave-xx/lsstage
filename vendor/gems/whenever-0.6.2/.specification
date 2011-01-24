@@ -1,0 +1,163 @@
+--- !ruby/object:Gem::Specification 
+name: whenever
+version: !ruby/object:Gem::Version 
+  hash: 3
+  prerelease: false
+  segments: 
+  - 0
+  - 6
+  - 2
+  version: 0.6.2
+platform: ruby
+authors: 
+- Javan Makhmali
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-10-26 00:00:00 +05:30
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: aaronh-chronic
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 1
+        segments: 
+        - 0
+        - 3
+        - 9
+        version: 0.3.9
+  type: :runtime
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: activesupport
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 11
+        segments: 
+        - 2
+        - 3
+        - 4
+        version: 2.3.4
+  type: :runtime
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: shoulda
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 9
+        segments: 
+        - 2
+        - 1
+        - 1
+        version: 2.1.1
+  type: :development
+  version_requirements: *id003
+- !ruby/object:Gem::Dependency 
+  name: mocha
+  prerelease: false
+  requirement: &id004 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 49
+        segments: 
+        - 0
+        - 9
+        - 5
+        version: 0.9.5
+  type: :development
+  version_requirements: *id004
+description: Clean ruby syntax for writing and deploying cron jobs.
+email: javan@javan.us
+executables: 
+- whenever
+- wheneverize
+extensions: []
+
+extra_rdoc_files: 
+- README.md
+files: 
+- .gitignore
+- CHANGELOG.md
+- README.md
+- Rakefile
+- bin/whenever
+- bin/wheneverize
+- lib/whenever.rb
+- lib/whenever/capistrano.rb
+- lib/whenever/command_line.rb
+- lib/whenever/cron.rb
+- lib/whenever/job.rb
+- lib/whenever/job_list.rb
+- lib/whenever/output_redirection.rb
+- lib/whenever/setup.rb
+- lib/whenever/version.rb
+- test/functional/command_line_test.rb
+- test/functional/output_at_test.rb
+- test/functional/output_default_defined_jobs_test.rb
+- test/functional/output_defined_job_test.rb
+- test/functional/output_env_test.rb
+- test/functional/output_redirection_test.rb
+- test/test_helper.rb
+- test/unit/cron_test.rb
+- test/unit/job_test.rb
+- whenever.gemspec
+has_rdoc: true
+homepage: http://github.com/javan/whenever
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Write your cron jobs in ruby.
+test_files: 
+- test/functional/command_line_test.rb
+- test/functional/output_at_test.rb
+- test/functional/output_default_defined_jobs_test.rb
+- test/functional/output_defined_job_test.rb
+- test/functional/output_env_test.rb
+- test/functional/output_redirection_test.rb
+- test/test_helper.rb
+- test/unit/cron_test.rb
+- test/unit/job_test.rb

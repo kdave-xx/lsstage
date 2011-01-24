@@ -1,0 +1,117 @@
+<% content_for :help do %>
+ <h1>Help with People</h1>
+ <p>On this page you can view the latest logos, filter with drop downs, browse and search for logos.</p>
+ <ul>
+   <li>Mouse over a logo to view the name of the logo and score.</li>
+   <li>Click to view the logo detail page.</li>
+ </ul>
+<% end %>
+
+<div id="submenu" class="encapsulate">
+	<% if signed_in? %>
+	<% else %>
+		<div class="new">
+			<a href="/people/new">+ Sign-up (Free)</a>
+		</div>
+	<% end %>
+		
+	<div class="search">
+		<% form_tag people_path, :method => :get do %>
+	    <%= hidden_field_tag :location, @location %>
+	    <%= hidden_field_tag :kind, 'search_result' %>
+	<div>
+	  <%= text_field_tag :query, params[:query] %>  <%= submit_tag 'Search' %>
+    </div>	   
+	  <% end %>
+ </div>
+</div>
+
+<div class="encapsulate">
+
+  <div class="resultsheader">
+    <ul class="title_menu clearfix">
+      <li>Showing</li>
+      <li class="menu_item">
+        <%= link_to_title_menu @kind, 'Select from Everyone, Designers, Pro-Designers or Others' %>
+        <div class="menu" style="display: none;">
+          <p><%= link_to 'Everyone', people_path(:kind => 'everyone', :location => @location) %></p>
+          <p><%= link_to 'Designers', people_path(:kind => 'designers', :location => @location) %></p>
+          <p><%= link_to 'Competition Winners', people_path(:kind => 'competition_winners', :location => @location) %></p>
+          <p><%= link_to 'Pro Designers', people_path(:kind => 'pro_designers', :location => @location) %></p>
+          <p><%= link_to 'Top Designers Last 30days ', people_path(:kind => 'top_designers_last_30_days', :location => @location) %></p>
+          <p><%= link_to 'Top Designers All Time ', people_path(:kind => 'top_designers_all_time', :location => @location) %></p>
+          <p><%= link_to 'Clients', people_path(:kind => 'clients', :location => @location) %></p>
+        </div>
+      </li>
+      <li>from</li>
+      <li>
+        <%= link_to_title_menu @location, 'Select from Everyone, Designers, Pro-Designers or Others' %>
+        <div class="menu" style="display: none;">
+          <p><%= link_to 'Everywhere', people_path(:kind => @kind, :location => 'everywhere') %></p>
+          <p><%= link_to 'Argentina', people_path(:kind => @kind, :location => 'argentina') %></p>
+          <p><%= link_to 'Australia', people_path(:kind => @kind, :location => 'australia') %></p>
+          <p><%= link_to 'Austria', people_path(:kind => @kind, :location => 'austria') %></p>
+          <p><%= link_to 'Belgium', people_path(:kind => @kind, :location => 'belgium') %></p>
+          <p><%= link_to 'Brazil', people_path(:kind => @kind, :location => 'brazil') %></p>
+          <p><%= link_to 'Bulgaria', people_path(:kind => @kind, :location => 'bulgaria') %></p>
+          <p><%= link_to 'Canada', people_path(:kind => @kind, :location => 'canada') %></p>
+          <p><%= link_to 'Chile', people_path(:kind => @kind, :location => 'chile') %></p>
+          <p><%= link_to 'China', people_path(:kind => @kind, :location => 'canada') %></p>
+          <p><%= link_to 'Colombia', people_path(:kind => @kind, :location => 'colombia') %></p>
+          <p><%= link_to 'Croatia', people_path(:kind => @kind, :location => 'croatia') %></p>
+          <p><%= link_to 'Denmark', people_path(:kind => @kind, :location => 'denmark') %></p>
+          <p><%= link_to 'Egypt', people_path(:kind => @kind, :location => 'egypt') %></p>
+          <p><%= link_to 'Estonia', people_path(:kind => @kind, :location => 'estonia') %></p>
+          <p><%= link_to 'France', people_path(:kind => @kind, :location => 'france') %></p>
+          <p><%= link_to 'Germany', people_path(:kind => @kind, :location => 'germany') %></p>
+          <p><%= link_to 'Greece', people_path(:kind => @kind, :location => 'greece') %></p>
+          <p><%= link_to 'Hong Kong', people_path(:kind => @kind, :location => 'hong kong') %></p>
+          <p><%= link_to 'India', people_path(:kind => @kind, :location => 'china') %></p>
+          <p><%= link_to 'Indonesia', people_path(:kind => @kind, :location => 'indonesia') %></p>
+          <p><%= link_to 'Ireland', people_path(:kind => @kind, :location => 'Ireland') %></p>
+          <p><%= link_to 'Italy', people_path(:kind => @kind, :location => 'italy') %></p>
+          <p><%= link_to 'Japan', people_path(:kind => @kind, :location => 'japan') %></p>
+          <p><%= link_to 'Malaysia', people_path(:kind => @kind, :location => 'malaysia') %></p>
+          <p><%= link_to 'Mexico', people_path(:kind => @kind, :location => 'mexico') %></p>
+          <p><%= link_to 'Netherlands', people_path(:kind => @kind, :location => 'netherlands') %></p>
+          <p><%= link_to 'New Zealand', people_path(:kind => @kind, :location => 'new zealand') %></p>
+          <p><%= link_to 'Panama', people_path(:kind => @kind, :location => 'panama') %></p>
+          <p><%= link_to 'Pakistan', people_path(:kind => @kind, :location => 'pakistan') %></p>
+          <p><%= link_to 'Phillipines', people_path(:kind => @kind, :location => 'phillipines') %></p>
+          <p><%= link_to 'Poland', people_path(:kind => @kind, :location => 'poland') %></p>
+          <p><%= link_to 'Portugal', people_path(:kind => @kind, :location => 'portugal') %></p>
+          <p><%= link_to 'Romania', people_path(:kind => @kind, :location => 'romania') %></p>
+          <p><%= link_to 'Russia', people_path(:kind => @kind, :location => 'russia') %></p>          
+          <p><%= link_to 'Singapore', people_path(:kind => @kind, :location => 'singapore') %></p>
+          <p><%= link_to 'South Africa', people_path(:kind => @kind, :location => 'south africa') %></p>
+          <p><%= link_to 'South Korea', people_path(:kind => @kind, :location => 'south korea') %></p>
+          <p><%= link_to 'Spain', people_path(:kind => @kind, :location => 'spain') %></p>
+          <p><%= link_to 'Sweden', people_path(:kind => @kind, :location => 'sweden') %></p>
+          <p><%= link_to 'Switzerland', people_path(:kind => @kind, :location => 'switzerland') %></p>
+          <p><%= link_to 'Turkey', people_path(:kind => @kind, :location => 'turkey') %></p>
+          <p><%= link_to 'UAE', people_path(:kind => @kind, :location => 'united arab emirates') %></p>
+           <p><%= link_to 'UK', people_path(:kind => @kind, :location => 'united kingdom') %></p>
+          <p><%= link_to 'USA', people_path(:kind => @kind, :location => 'united states') %></p>
+          
+          
+          
+        </div>
+      </li>
+      <li><a class="rss" href="/people.rss" title="Get new people via RSS"><img src="images/rssfeed16x16.png" /></a></li>
+    </ul>
+   
+  </div>
+  <% unless @keyword.blank? %>
+  <div>
+    Showing all users for keyword "<%= h @keyword %>"
+  </div>
+  <% end %>
+
+  
+  <div class="people clearfix">
+    <%= render :partial => "person", :collection => @people %>
+  </div>
+  
+  <div class="paginate"><%= will_paginate @people %></div>
+  
+</div>

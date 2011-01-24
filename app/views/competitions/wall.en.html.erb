@@ -1,0 +1,10 @@
+<% content_for :help do %>
+ <p>The Wall view removes the noise and displays all the logos in a slightly larger size on a dark background and without any pagination. A nice way to view lots of logos. Especially if you have a big monitor/display.</p><ul><li>To get back to the competition just go Back in your browser or click the completiton name link at the top of this page.</li><li>You can also hover over a logo to display the logo and designers name.</li><li>Click a logo to go to the Logo detail page.</li></ul>
+<% end %>
+
+<div id="walltitle"><p>Logo Wall for competition: <%= link_to h(@competition.name), @competition %></p></div>
+
+
+<div id="logowall" class="encapsulate">
+  <%= render :partial => 'logos/logo', :collection => @competition.current_logos, :locals => {:size => :medium, :show_private => true} %>
+</div>

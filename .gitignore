@@ -1,0 +1,11 @@
+.DS_Store
+log/*.log
+log/*.pid
+solr/development/*
+tmp/**/*
+db/sphinx/**/*
+public/system/*
+nbproject/*
+
+
+

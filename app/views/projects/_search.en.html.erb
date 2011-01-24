@@ -1,0 +1,17 @@
+<div class="search">
+	  <div>
+	    <% form_tag projects_path, :method => :get do %>
+	      <%= hidden_field_tag :kind, 'search_result' %>
+	      <div>
+	         <%= text_field_tag :query, params[:query] %> <%= submit_tag 'Search', :title => 'Search Projects' %>
+	      </div>
+	      <!--<div>
+	        By: 
+	          <label>< %= radio_button_tag :sort, 'deadline', params[:sort] == 'deadline' %> Deadline</label>
+	
+	          <label>< %= radio_button_tag :sort, 'open_date', params[:sort] == 'open_date' %> Open Date</label>
+	      </div>-->
+	      
+	    <% end %>
+	  </div>
+</div>

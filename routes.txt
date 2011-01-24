@@ -1,0 +1,284 @@
+(in /home/pc3/Myproject/Test/logosauce)
+Requiring REXML
+                        new_session GET    /session/new(.:format)                                         {:controller=>"sessions", :action=>"new"}
+                       edit_session GET    /session/edit(.:format)                                        {:controller=>"sessions", :action=>"edit"}
+             reset_password_session GET    /session/reset_password(.:format)                              {:controller=>"sessions", :action=>"reset_password"}
+            forget_password_session GET    /session/forget_password(.:format)                             {:controller=>"sessions", :action=>"forget_password"}
+      reset_password_commit_session PUT    /session/reset_password_commit(.:format)                       {:controller=>"sessions", :action=>"reset_password_commit"}
+     forget_password_commit_session POST   /session/forget_password_commit(.:format)                      {:controller=>"sessions", :action=>"forget_password_commit"}
+                            session GET    /session(.:format)                                             {:controller=>"sessions", :action=>"show"}
+                                    PUT    /session(.:format)                                             {:controller=>"sessions", :action=>"update"}
+                                    DELETE /session(.:format)                                             {:controller=>"sessions", :action=>"destroy"}
+                                    POST   /session(.:format)                                             {:controller=>"sessions", :action=>"create"}
+                        blog_images GET    /blog_images(.:format)                                         {:controller=>"blog_images", :action=>"index"}
+                                    POST   /blog_images(.:format)                                         {:controller=>"blog_images", :action=>"create"}
+                     new_blog_image GET    /blog_images/new(.:format)                                     {:controller=>"blog_images", :action=>"new"}
+                    edit_blog_image GET    /blog_images/:id/edit(.:format)                                {:controller=>"blog_images", :action=>"edit"}
+                         blog_image GET    /blog_images/:id(.:format)                                     {:controller=>"blog_images", :action=>"show"}
+                                    PUT    /blog_images/:id(.:format)                                     {:controller=>"blog_images", :action=>"update"}
+                                    DELETE /blog_images/:id(.:format)                                     {:controller=>"blog_images", :action=>"destroy"}
+                         tags_posts GET    /posts/tags(.:format)                                          {:controller=>"posts", :action=>"tags"}
+                              posts GET    /posts(.:format)                                               {:controller=>"posts", :action=>"index"}
+                                    POST   /posts(.:format)                                               {:controller=>"posts", :action=>"create"}
+                           new_post GET    /posts/new(.:format)                                           {:controller=>"posts", :action=>"new"}
+                          edit_post GET    /posts/:id/edit(.:format)                                      {:controller=>"posts", :action=>"edit"}
+                               post GET    /posts/:id(.:format)                                           {:controller=>"posts", :action=>"show"}
+                                    PUT    /posts/:id(.:format)                                           {:controller=>"posts", :action=>"update"}
+                                    DELETE /posts/:id(.:format)                                           {:controller=>"posts", :action=>"destroy"}
+                      post_comments GET    /posts/:post_id/comments(.:format)                             {:controller=>"comments", :action=>"index"}
+                                    POST   /posts/:post_id/comments(.:format)                             {:controller=>"comments", :action=>"create"}
+                   new_post_comment GET    /posts/:post_id/comments/new(.:format)                         {:controller=>"comments", :action=>"new"}
+                  edit_post_comment GET    /posts/:post_id/comments/:id/edit(.:format)                    {:controller=>"comments", :action=>"edit"}
+                       post_comment GET    /posts/:post_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"show"}
+                                    PUT    /posts/:post_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"update"}
+                                    DELETE /posts/:post_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"destroy"}
+                             people GET    /people(.:format)                                              {:controller=>"people", :action=>"index"}
+                                    POST   /people(.:format)                                              {:controller=>"people", :action=>"create"}
+                         new_person GET    /people/new(.:format)                                          {:controller=>"people", :action=>"new"}
+                        edit_person GET    /people/:id/edit(.:format)                                     {:controller=>"people", :action=>"edit"}
+     process_express_payment_person GET    /people/:id/process_express_payment(.:format)                  {:controller=>"people", :action=>"process_express_payment"}
+                reset_avatar_person PUT    /people/:id/reset_avatar(.:format)                             {:controller=>"people", :action=>"reset_avatar"}
+                         pay_person GET    /people/:id/pay(.:format)                                      {:controller=>"people", :action=>"pay"}
+                                    PUT    /people/:id/pay(.:format)                                      {:controller=>"people", :action=>"pay"}
+                       admin_person GET    /people/:id/admin(.:format)                                    {:controller=>"people", :action=>"admin"}
+                                    PUT    /people/:id/admin(.:format)                                    {:controller=>"people", :action=>"admin"}
+                       email_person GET    /people/:id/email(.:format)                                    {:controller=>"people", :action=>"email"}
+                                    PUT    /people/:id/email(.:format)                                    {:controller=>"people", :action=>"email"}
+                             person GET    /people/:id(.:format)                                          {:controller=>"people", :action=>"show"}
+                                    PUT    /people/:id(.:format)                                          {:controller=>"people", :action=>"update"}
+                                    DELETE /people/:id(.:format)                                          {:controller=>"people", :action=>"destroy"}
+                       person_logos GET    /people/:person_id/logos(.:format)                             {:controller=>"logos", :action=>"index"}
+                                    POST   /people/:person_id/logos(.:format)                             {:controller=>"logos", :action=>"create"}
+                    new_person_logo GET    /people/:person_id/logos/new(.:format)                         {:controller=>"logos", :action=>"new"}
+                   edit_person_logo GET    /people/:person_id/logos/:id/edit(.:format)                    {:controller=>"logos", :action=>"edit"}
+                        person_logo GET    /people/:person_id/logos/:id(.:format)                         {:controller=>"logos", :action=>"show"}
+                                    PUT    /people/:person_id/logos/:id(.:format)                         {:controller=>"logos", :action=>"update"}
+                                    DELETE /people/:person_id/logos/:id(.:format)                         {:controller=>"logos", :action=>"destroy"}
+                  person_favourites GET    /people/:person_id/favourites(.:format)                        {:controller=>"favourites", :action=>"index"}
+                                    POST   /people/:person_id/favourites(.:format)                        {:controller=>"favourites", :action=>"create"}
+               new_person_favourite GET    /people/:person_id/favourites/new(.:format)                    {:controller=>"favourites", :action=>"new"}
+              edit_person_favourite GET    /people/:person_id/favourites/:id/edit(.:format)               {:controller=>"favourites", :action=>"edit"}
+                   person_favourite GET    /people/:person_id/favourites/:id(.:format)                    {:controller=>"favourites", :action=>"show"}
+                                    PUT    /people/:person_id/favourites/:id(.:format)                    {:controller=>"favourites", :action=>"update"}
+                                    DELETE /people/:person_id/favourites/:id(.:format)                    {:controller=>"favourites", :action=>"destroy"}
+                person_transactions GET    /people/:person_id/transactions(.:format)                      {:controller=>"transactions", :action=>"index"}
+                                    POST   /people/:person_id/transactions(.:format)                      {:controller=>"transactions", :action=>"create"}
+             new_person_transaction GET    /people/:person_id/transactions/new(.:format)                  {:controller=>"transactions", :action=>"new"}
+            edit_person_transaction GET    /people/:person_id/transactions/:id/edit(.:format)             {:controller=>"transactions", :action=>"edit"}
+                 person_transaction GET    /people/:person_id/transactions/:id(.:format)                  {:controller=>"transactions", :action=>"show"}
+                                    PUT    /people/:person_id/transactions/:id(.:format)                  {:controller=>"transactions", :action=>"update"}
+                                    DELETE /people/:person_id/transactions/:id(.:format)                  {:controller=>"transactions", :action=>"destroy"}
+            won_person_competitions GET    /people/:person_id/competitions/won(.:format)                  {:controller=>"competitions", :action=>"won"}
+                person_competitions GET    /people/:person_id/competitions(.:format)                      {:controller=>"competitions", :action=>"index"}
+                                    POST   /people/:person_id/competitions(.:format)                      {:controller=>"competitions", :action=>"create"}
+             new_person_competition GET    /people/:person_id/competitions/new(.:format)                  {:controller=>"competitions", :action=>"new"}
+            edit_person_competition GET    /people/:person_id/competitions/:id/edit(.:format)             {:controller=>"competitions", :action=>"edit"}
+                 person_competition GET    /people/:person_id/competitions/:id(.:format)                  {:controller=>"competitions", :action=>"show"}
+                                    PUT    /people/:person_id/competitions/:id(.:format)                  {:controller=>"competitions", :action=>"update"}
+                                    DELETE /people/:person_id/competitions/:id(.:format)                  {:controller=>"competitions", :action=>"destroy"}
+                won_person_projects GET    /people/:person_id/projects/won(.:format)                      {:controller=>"projects", :action=>"won"}
+                    person_projects GET    /people/:person_id/projects(.:format)                          {:controller=>"projects", :action=>"index"}
+                                    POST   /people/:person_id/projects(.:format)                          {:controller=>"projects", :action=>"create"}
+                 new_person_project GET    /people/:person_id/projects/new(.:format)                      {:controller=>"projects", :action=>"new"}
+                edit_person_project GET    /people/:person_id/projects/:id/edit(.:format)                 {:controller=>"projects", :action=>"edit"}
+                     person_project GET    /people/:person_id/projects/:id(.:format)                      {:controller=>"projects", :action=>"show"}
+                                    PUT    /people/:person_id/projects/:id(.:format)                      {:controller=>"projects", :action=>"update"}
+                                    DELETE /people/:person_id/projects/:id(.:format)                      {:controller=>"projects", :action=>"destroy"}
+         client_unpaid_competitions GET    /competitions/client_unpaid(.:format)                          {:controller=>"competitions", :action=>"client_unpaid"}
+            unapproved_competitions GET    /competitions/unapproved(.:format)                             {:controller=>"competitions", :action=>"unapproved"}
+                unpaid_competitions GET    /competitions/unpaid(.:format)                                 {:controller=>"competitions", :action=>"unpaid"}
+           client_paid_competitions GET    /competitions/client_paid(.:format)                            {:controller=>"competitions", :action=>"client_paid"}
+                       competitions GET    /competitions(.:format)                                        {:controller=>"competitions", :action=>"index"}
+                                    POST   /competitions(.:format)                                        {:controller=>"competitions", :action=>"create"}
+                    new_competition GET    /competitions/new(.:format)                                    {:controller=>"competitions", :action=>"new"}
+                   edit_competition GET    /competitions/:id/edit(.:format)                               {:controller=>"competitions", :action=>"edit"}
+                   wall_competition GET    /competitions/:id/wall(.:format)                               {:controller=>"competitions", :action=>"wall"}
+process_express_payment_competition GET    /competitions/:id/process_express_payment(.:format)            {:controller=>"competitions", :action=>"process_express_payment"}
+                    pay_competition GET    /competitions/:id/pay(.:format)                                {:controller=>"competitions", :action=>"pay"}
+                                    PUT    /competitions/:id/pay(.:format)                                {:controller=>"competitions", :action=>"pay"}
+                  admin_competition GET    /competitions/:id/admin(.:format)                              {:controller=>"competitions", :action=>"admin"}
+                                    PUT    /competitions/:id/admin(.:format)                              {:controller=>"competitions", :action=>"admin"}
+                approve_competition POST   /competitions/:id/approve(.:format)                            {:controller=>"competitions", :action=>"approve"}
+                        competition GET    /competitions/:id(.:format)                                    {:controller=>"competitions", :action=>"show"}
+                                    PUT    /competitions/:id(.:format)                                    {:controller=>"competitions", :action=>"update"}
+                                    DELETE /competitions/:id(.:format)                                    {:controller=>"competitions", :action=>"destroy"}
+               competition_comments GET    /competitions/:competition_id/comments(.:format)               {:controller=>"comments", :action=>"index"}
+                                    POST   /competitions/:competition_id/comments(.:format)               {:controller=>"comments", :action=>"create"}
+            new_competition_comment GET    /competitions/:competition_id/comments/new(.:format)           {:controller=>"comments", :action=>"new"}
+           edit_competition_comment GET    /competitions/:competition_id/comments/:id/edit(.:format)      {:controller=>"comments", :action=>"edit"}
+                competition_comment GET    /competitions/:competition_id/comments/:id(.:format)           {:controller=>"comments", :action=>"show"}
+                                    PUT    /competitions/:competition_id/comments/:id(.:format)           {:controller=>"comments", :action=>"update"}
+                                    DELETE /competitions/:competition_id/comments/:id(.:format)           {:controller=>"comments", :action=>"destroy"}
+                  competition_logos GET    /competitions/:competition_id/logos(.:format)                  {:controller=>"logos", :action=>"index"}
+                                    POST   /competitions/:competition_id/logos(.:format)                  {:controller=>"logos", :action=>"create"}
+               new_competition_logo GET    /competitions/:competition_id/logos/new(.:format)              {:controller=>"logos", :action=>"new"}
+              edit_competition_logo GET    /competitions/:competition_id/logos/:id/edit(.:format)         {:controller=>"logos", :action=>"edit"}
+                   competition_logo GET    /competitions/:competition_id/logos/:id(.:format)              {:controller=>"logos", :action=>"show"}
+                                    PUT    /competitions/:competition_id/logos/:id(.:format)              {:controller=>"logos", :action=>"update"}
+                                    DELETE /competitions/:competition_id/logos/:id(.:format)              {:controller=>"logos", :action=>"destroy"}
+                 competition_people GET    /competitions/:competition_id/people(.:format)                 {:controller=>"people", :action=>"index"}
+                                    POST   /competitions/:competition_id/people(.:format)                 {:controller=>"people", :action=>"create"}
+             new_competition_person GET    /competitions/:competition_id/people/new(.:format)             {:controller=>"people", :action=>"new"}
+            edit_competition_person GET    /competitions/:competition_id/people/:id/edit(.:format)        {:controller=>"people", :action=>"edit"}
+                 competition_person GET    /competitions/:competition_id/people/:id(.:format)             {:controller=>"people", :action=>"show"}
+                                    PUT    /competitions/:competition_id/people/:id(.:format)             {:controller=>"people", :action=>"update"}
+                                    DELETE /competitions/:competition_id/people/:id(.:format)             {:controller=>"people", :action=>"destroy"}
+                competition_entries GET    /competitions/:competition_id/entries(.:format)                {:controller=>"entries", :action=>"index"}
+                                    POST   /competitions/:competition_id/entries(.:format)                {:controller=>"entries", :action=>"create"}
+              new_competition_entry GET    /competitions/:competition_id/entries/new(.:format)            {:controller=>"entries", :action=>"new"}
+             edit_competition_entry GET    /competitions/:competition_id/entries/:id/edit(.:format)       {:controller=>"entries", :action=>"edit"}
+         withdraw_competition_entry DELETE /competitions/:competition_id/entries/:id/withdraw(.:format)   {:controller=>"entries", :action=>"withdraw"}
+             rate_competition_entry POST   /competitions/:competition_id/entries/:id/rate(.:format)       {:controller=>"entries", :action=>"rate"}
+             pick_competition_entry POST   /competitions/:competition_id/entries/:id/pick(.:format)       {:controller=>"entries", :action=>"pick"}
+                  competition_entry GET    /competitions/:competition_id/entries/:id(.:format)            {:controller=>"entries", :action=>"show"}
+                                    PUT    /competitions/:competition_id/entries/:id(.:format)            {:controller=>"entries", :action=>"update"}
+                                    DELETE /competitions/:competition_id/entries/:id(.:format)            {:controller=>"entries", :action=>"destroy"}
+           competition_transactions GET    /competitions/:competition_id/transactions(.:format)           {:controller=>"transactions", :action=>"index"}
+                                    POST   /competitions/:competition_id/transactions(.:format)           {:controller=>"transactions", :action=>"create"}
+        new_competition_transaction GET    /competitions/:competition_id/transactions/new(.:format)       {:controller=>"transactions", :action=>"new"}
+       edit_competition_transaction GET    /competitions/:competition_id/transactions/:id/edit(.:format)  {:controller=>"transactions", :action=>"edit"}
+            competition_transaction GET    /competitions/:competition_id/transactions/:id(.:format)       {:controller=>"transactions", :action=>"show"}
+                                    PUT    /competitions/:competition_id/transactions/:id(.:format)       {:controller=>"transactions", :action=>"update"}
+                                    DELETE /competitions/:competition_id/transactions/:id(.:format)       {:controller=>"transactions", :action=>"destroy"}
+               competition_payments GET    /competitions/:competition_id/payments(.:format)               {:controller=>"payments", :action=>"index"}
+                                    POST   /competitions/:competition_id/payments(.:format)               {:controller=>"payments", :action=>"create"}
+            new_competition_payment GET    /competitions/:competition_id/payments/new(.:format)           {:controller=>"payments", :action=>"new"}
+           edit_competition_payment GET    /competitions/:competition_id/payments/:id/edit(.:format)      {:controller=>"payments", :action=>"edit"}
+                competition_payment GET    /competitions/:competition_id/payments/:id(.:format)           {:controller=>"payments", :action=>"show"}
+                                    PUT    /competitions/:competition_id/payments/:id(.:format)           {:controller=>"payments", :action=>"update"}
+                                    DELETE /competitions/:competition_id/payments/:id(.:format)           {:controller=>"payments", :action=>"destroy"}
+            new_competition_artwork GET    /competitions/:competition_id/artwork/new(.:format)            {:controller=>"artworks", :action=>"new"}
+           edit_competition_artwork GET    /competitions/:competition_id/artwork/edit(.:format)           {:controller=>"artworks", :action=>"edit"}
+                competition_artwork GET    /competitions/:competition_id/artwork(.:format)                {:controller=>"artworks", :action=>"show"}
+                                    PUT    /competitions/:competition_id/artwork(.:format)                {:controller=>"artworks", :action=>"update"}
+                                    DELETE /competitions/:competition_id/artwork(.:format)                {:controller=>"artworks", :action=>"destroy"}
+                                    POST   /competitions/:competition_id/artwork(.:format)                {:controller=>"artworks", :action=>"create"}
+                        sales_logos GET    /logos/sales(.:format)                                         {:controller=>"logos", :action=>"sales"}
+                         tags_logos GET    /logos/tags(.:format)                                          {:controller=>"logos", :action=>"tags"}
+                              logos GET    /logos(.:format)                                               {:controller=>"logos", :action=>"index"}
+                                    POST   /logos(.:format)                                               {:controller=>"logos", :action=>"create"}
+                           new_logo GET    /logos/new(.:format)                                           {:controller=>"logos", :action=>"new"}
+                          edit_logo GET    /logos/:id/edit(.:format)                                      {:controller=>"logos", :action=>"edit"}
+                          sold_logo GET    /logos/:id/sold(.:format)                                      {:controller=>"logos", :action=>"sold"}
+       process_express_payment_logo GET    /logos/:id/process_express_payment(.:format)                   {:controller=>"logos", :action=>"process_express_payment"}
+                       preview_logo GET    /logos/:id/preview(.:format)                                   {:controller=>"logos", :action=>"preview"}
+                         image_logo GET    /logos/:id/image(.:format)                                     {:controller=>"logos", :action=>"image"}
+                           pay_logo GET    /logos/:id/pay(.:format)                                       {:controller=>"logos", :action=>"pay"}
+                                    PUT    /logos/:id/pay(.:format)                                       {:controller=>"logos", :action=>"pay"}
+                               logo GET    /logos/:id(.:format)                                           {:controller=>"logos", :action=>"show"}
+                                    PUT    /logos/:id(.:format)                                           {:controller=>"logos", :action=>"update"}
+                                    DELETE /logos/:id(.:format)                                           {:controller=>"logos", :action=>"destroy"}
+                      logo_comments GET    /logos/:logo_id/comments(.:format)                             {:controller=>"comments", :action=>"index"}
+                                    POST   /logos/:logo_id/comments(.:format)                             {:controller=>"comments", :action=>"create"}
+                   new_logo_comment GET    /logos/:logo_id/comments/new(.:format)                         {:controller=>"comments", :action=>"new"}
+                  edit_logo_comment GET    /logos/:logo_id/comments/:id/edit(.:format)                    {:controller=>"comments", :action=>"edit"}
+                       logo_comment GET    /logos/:logo_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"show"}
+                                    PUT    /logos/:logo_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"update"}
+                                    DELETE /logos/:logo_id/comments/:id(.:format)                         {:controller=>"comments", :action=>"destroy"}
+                  logo_transactions GET    /logos/:logo_id/transactions(.:format)                         {:controller=>"transactions", :action=>"index"}
+                                    POST   /logos/:logo_id/transactions(.:format)                         {:controller=>"transactions", :action=>"create"}
+               new_logo_transaction GET    /logos/:logo_id/transactions/new(.:format)                     {:controller=>"transactions", :action=>"new"}
+              edit_logo_transaction GET    /logos/:logo_id/transactions/:id/edit(.:format)                {:controller=>"transactions", :action=>"edit"}
+                   logo_transaction GET    /logos/:logo_id/transactions/:id(.:format)                     {:controller=>"transactions", :action=>"show"}
+                                    PUT    /logos/:logo_id/transactions/:id(.:format)                     {:controller=>"transactions", :action=>"update"}
+                                    DELETE /logos/:logo_id/transactions/:id(.:format)                     {:controller=>"transactions", :action=>"destroy"}
+                      logo_payments GET    /logos/:logo_id/payments(.:format)                             {:controller=>"payments", :action=>"index"}
+                                    POST   /logos/:logo_id/payments(.:format)                             {:controller=>"payments", :action=>"create"}
+                   new_logo_payment GET    /logos/:logo_id/payments/new(.:format)                         {:controller=>"payments", :action=>"new"}
+                  edit_logo_payment GET    /logos/:logo_id/payments/:id/edit(.:format)                    {:controller=>"payments", :action=>"edit"}
+                       logo_payment GET    /logos/:logo_id/payments/:id(.:format)                         {:controller=>"payments", :action=>"show"}
+                                    PUT    /logos/:logo_id/payments/:id(.:format)                         {:controller=>"payments", :action=>"update"}
+                                    DELETE /logos/:logo_id/payments/:id(.:format)                         {:controller=>"payments", :action=>"destroy"}
+                   new_logo_artwork GET    /logos/:logo_id/artwork/new(.:format)                          {:controller=>"artworks", :action=>"new"}
+                  edit_logo_artwork GET    /logos/:logo_id/artwork/edit(.:format)                         {:controller=>"artworks", :action=>"edit"}
+                       logo_artwork GET    /logos/:logo_id/artwork(.:format)                              {:controller=>"artworks", :action=>"show"}
+                                    PUT    /logos/:logo_id/artwork(.:format)                              {:controller=>"artworks", :action=>"update"}
+                                    DELETE /logos/:logo_id/artwork(.:format)                              {:controller=>"artworks", :action=>"destroy"}
+                                    POST   /logos/:logo_id/artwork(.:format)                              {:controller=>"artworks", :action=>"create"}
+                      mine_projects GET    /projects/mine(.:format)                                       {:controller=>"projects", :action=>"mine"}
+                unapproved_projects GET    /projects/unapproved(.:format)                                 {:controller=>"projects", :action=>"unapproved"}
+                    unpaid_projects GET    /projects/unpaid(.:format)                                     {:controller=>"projects", :action=>"unpaid"}
+                    closed_projects GET    /projects/closed(.:format)                                     {:controller=>"projects", :action=>"closed"}
+                   winners_projects GET    /projects/winners(.:format)                                    {:controller=>"projects", :action=>"winners"}
+                           projects GET    /projects(.:format)                                            {:controller=>"projects", :action=>"index"}
+                                    POST   /projects(.:format)                                            {:controller=>"projects", :action=>"create"}
+                        new_project GET    /projects/new(.:format)                                        {:controller=>"projects", :action=>"new"}
+                       edit_project GET    /projects/:id/edit(.:format)                                   {:controller=>"projects", :action=>"edit"}
+    process_express_payment_project GET    /projects/:id/process_express_payment(.:format)                {:controller=>"projects", :action=>"process_express_payment"}
+                        pay_project GET    /projects/:id/pay(.:format)                                    {:controller=>"projects", :action=>"pay"}
+                                    PUT    /projects/:id/pay(.:format)                                    {:controller=>"projects", :action=>"pay"}
+                      admin_project GET    /projects/:id/admin(.:format)                                  {:controller=>"projects", :action=>"admin"}
+                                    PUT    /projects/:id/admin(.:format)                                  {:controller=>"projects", :action=>"admin"}
+                            project GET    /projects/:id(.:format)                                        {:controller=>"projects", :action=>"show"}
+                                    PUT    /projects/:id(.:format)                                        {:controller=>"projects", :action=>"update"}
+                                    DELETE /projects/:id(.:format)                                        {:controller=>"projects", :action=>"destroy"}
+                   project_comments GET    /projects/:project_id/comments(.:format)                       {:controller=>"comments", :action=>"index"}
+                                    POST   /projects/:project_id/comments(.:format)                       {:controller=>"comments", :action=>"create"}
+                new_project_comment GET    /projects/:project_id/comments/new(.:format)                   {:controller=>"comments", :action=>"new"}
+               edit_project_comment GET    /projects/:project_id/comments/:id/edit(.:format)              {:controller=>"comments", :action=>"edit"}
+                    project_comment GET    /projects/:project_id/comments/:id(.:format)                   {:controller=>"comments", :action=>"show"}
+                                    PUT    /projects/:project_id/comments/:id(.:format)                   {:controller=>"comments", :action=>"update"}
+                                    DELETE /projects/:project_id/comments/:id(.:format)                   {:controller=>"comments", :action=>"destroy"}
+                       project_bids GET    /projects/:project_id/bids(.:format)                           {:controller=>"bids", :action=>"index"}
+                                    POST   /projects/:project_id/bids(.:format)                           {:controller=>"bids", :action=>"create"}
+                    new_project_bid GET    /projects/:project_id/bids/new(.:format)                       {:controller=>"bids", :action=>"new"}
+                   edit_project_bid GET    /projects/:project_id/bids/:id/edit(.:format)                  {:controller=>"bids", :action=>"edit"}
+                    won_project_bid PUT    /projects/:project_id/bids/:id/won(.:format)                   {:controller=>"bids", :action=>"won"}
+                   lost_project_bid PUT    /projects/:project_id/bids/:id/lost(.:format)                  {:controller=>"bids", :action=>"lost"}
+                        project_bid GET    /projects/:project_id/bids/:id(.:format)                       {:controller=>"bids", :action=>"show"}
+                                    PUT    /projects/:project_id/bids/:id(.:format)                       {:controller=>"bids", :action=>"update"}
+                                    DELETE /projects/:project_id/bids/:id(.:format)                       {:controller=>"bids", :action=>"destroy"}
+               project_bid_comments GET    /projects/:project_id/bids/:bid_id/comments(.:format)          {:controller=>"comments", :action=>"index"}
+                                    POST   /projects/:project_id/bids/:bid_id/comments(.:format)          {:controller=>"comments", :action=>"create"}
+            new_project_bid_comment GET    /projects/:project_id/bids/:bid_id/comments/new(.:format)      {:controller=>"comments", :action=>"new"}
+           edit_project_bid_comment GET    /projects/:project_id/bids/:bid_id/comments/:id/edit(.:format) {:controller=>"comments", :action=>"edit"}
+                project_bid_comment GET    /projects/:project_id/bids/:bid_id/comments/:id(.:format)      {:controller=>"comments", :action=>"show"}
+                                    PUT    /projects/:project_id/bids/:bid_id/comments/:id(.:format)      {:controller=>"comments", :action=>"update"}
+                                    DELETE /projects/:project_id/bids/:bid_id/comments/:id(.:format)      {:controller=>"comments", :action=>"destroy"}
+               project_transactions GET    /projects/:project_id/transactions(.:format)                   {:controller=>"transactions", :action=>"index"}
+                                    POST   /projects/:project_id/transactions(.:format)                   {:controller=>"transactions", :action=>"create"}
+            new_project_transaction GET    /projects/:project_id/transactions/new(.:format)               {:controller=>"transactions", :action=>"new"}
+           edit_project_transaction GET    /projects/:project_id/transactions/:id/edit(.:format)          {:controller=>"transactions", :action=>"edit"}
+                project_transaction GET    /projects/:project_id/transactions/:id(.:format)               {:controller=>"transactions", :action=>"show"}
+                                    PUT    /projects/:project_id/transactions/:id(.:format)               {:controller=>"transactions", :action=>"update"}
+                                    DELETE /projects/:project_id/transactions/:id(.:format)               {:controller=>"transactions", :action=>"destroy"}
+                       ipn_payments POST   /payments/ipn(.:format)                                        {:controller=>"payments", :action=>"ipn"}
+                           payments GET    /payments(.:format)                                            {:controller=>"payments", :action=>"index"}
+                                    POST   /payments(.:format)                                            {:controller=>"payments", :action=>"create"}
+                        new_payment GET    /payments/new(.:format)                                        {:controller=>"payments", :action=>"new"}
+                       edit_payment GET    /payments/:id/edit(.:format)                                   {:controller=>"payments", :action=>"edit"}
+                            payment GET    /payments/:id(.:format)                                        {:controller=>"payments", :action=>"show"}
+                                    PUT    /payments/:id(.:format)                                        {:controller=>"payments", :action=>"update"}
+                                    DELETE /payments/:id(.:format)                                        {:controller=>"payments", :action=>"destroy"}
+                           comments GET    /comments(.:format)                                            {:controller=>"comments", :action=>"index"}
+                                    POST   /comments(.:format)                                            {:controller=>"comments", :action=>"create"}
+                        new_comment GET    /comments/new(.:format)                                        {:controller=>"comments", :action=>"new"}
+                       edit_comment GET    /comments/:id/edit(.:format)                                   {:controller=>"comments", :action=>"edit"}
+                       bury_comment POST   /comments/:id/bury(.:format)                                   {:controller=>"comments", :action=>"bury"}
+                     unbury_comment POST   /comments/:id/unbury(.:format)                                 {:controller=>"comments", :action=>"unbury"}
+                            comment GET    /comments/:id(.:format)                                        {:controller=>"comments", :action=>"show"}
+                                    PUT    /comments/:id(.:format)                                        {:controller=>"comments", :action=>"update"}
+                                    DELETE /comments/:id(.:format)                                        {:controller=>"comments", :action=>"destroy"}
+                          dashboard        /dashboard                                                     {:controller=>"dashboard", :action=>"index"}
+                         deactivate        /deactivate/:id                                                {:controller=>"people", :action=>"deactivate"}
+                               root        /                                                              {:controller=>"site", :action=>"home"}
+                      findadesigner        /findadesigner                                                 {:controller=>"site", :action=>"findadesigner"}
+                           getalogo        /getalogo                                                      {:controller=>"site", :action=>"getalogo"}
+                        findaclient        /findaclient                                                   {:controller=>"site", :action=>"findaclient"}
+                             oozing        /oozing                                                        {:controller=>"site", :action=>"oozing"}
+                                faq        /faq                                                           {:controller=>"site", :action=>"help"}
+                               blog        /blog                                                          {:controller=>"posts", :action=>"index"}
+                            contact        /contact                                                       {:controller=>"site", :action=>"contact"}
+                               tour        /tour                                                          {:controller=>"site", :action=>"tour"}
+                            pricing        /pricing                                                       {:controller=>"site", :action=>"pricing"}
+                              about        /about                                                         {:controller=>"site", :action=>"about"}
+                              terms        /terms                                                         {:controller=>"site", :action=>"terms"}
+                            privacy        /privacy                                                       {:controller=>"site", :action=>"privacy"}
+                               help        /help                                                          {:controller=>"site", :action=>"help"}
+                            thebook        /thebook                                                       {:controller=>"site", :action=>"thebook"}
+                          thebottle        /thebottle                                                     {:controller=>"site", :action=>"thebottle"}
+                            getnews        /getnews                                                       {:controller=>"site", :action=>"getnews"}
+                        advertising        /advertising                                                   {:controller=>"site", :action=>"advertising"}
+                    activities_feed        /feeds/activities.rss                                          {:controller=>"site", :format=>"rss", :action=>"activities"}
+                     simple_captcha        /simple_captcha/:action                                        {:controller=>"simple_captcha"}
+                                map        /javascripts/:action(.:format)                                 {:controller=>"javascripts"}

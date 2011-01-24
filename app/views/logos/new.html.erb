@@ -1,0 +1,26 @@
+<% content_for :help do %>
+ <h1>Help with Logos</h1>
+ <p>On this page you can upload a logo.</p>
+ <ul>
+   <li>Logos must be uploaded as a 640 x 640px RGB .jpg. We suggest you create a canvas in Photoshop and place your logo design on it.</li>
+   <li>Name your logo so that it makes sense and is unique.</li>
+   <li>Select whether it's for your portfolio (including logos you want to sell) or a competiton. 
+  <li>If it's for a competition - you'll need to select which competition it applies to.</li>
+  <li>You can make your competition entry invisible to competitors by clicking the "Hide entry before close" checkbox. This will mean only the client and Logosauce admins will be able to view the logo until the competition closes, after which the logo will be visible.</li>
+  <li>It's helpful to describe the idea behind the logo, or why you designed it a particular way, or the history of the logo. remember the description is searchable and it help other users and search engines find your design and portfolio.</li>
+  <li>You must add at least 3 tags to your logo. These will help users find and filter logos when searching and browsing.</li>
+ </ul>
+<% end %>
+
+<div class="twothirds">
+
+<div class="resultsheader">
+ <h1>Yippee!	 A New Logo</h1>
+</div>
+
+<% form_for @logo, :html => {:multipart => true} do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <br /> 
+  <%= f.submit 'Upload & Save' %>
+<% end %>
+</div>

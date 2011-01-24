@@ -1,0 +1,17 @@
+development:
+  production
+
+production:
+  adapter: mysql
+  encoding: utf8
+  database: ls_production
+  username: logosauce
+  password: ***HIDDEN***
+  socket: /var/run/mysqld/mysqld.sock
+
+previous:
+  adapter: mysql
+  database: logosauce_production
+  username: logosauce
+  password: ***HIDDEN***
+  socket: /var/run/mysqld/mysqld.sock

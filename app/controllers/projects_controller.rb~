@@ -1,0 +1,180 @@
+class ProjectsController < ApplicationController
+  before_filter :require_sign_in, :except => [:index, :closed, :open, :show]
+
+  before_filter :fetch_project, :only => [:show, :edit, :update, :admin]
+  
+  before_filter :permission_check, :only => [:show]
+  before_filter :security_check, :only => [:edit, :update]
+  before_filter :require_admin, :only => [:unpaid, :unapproved, :approve, :admin]
+  
+  def index 
+    case params[:kind]
+    when 'all', 'open', 'closed', 'my', 'winners', 'search_result'
+      @kind = params[:kind]
+    else
+      @kind = 'open'
+    end
+
+    case params[:sort]
+    when 'deadline', 'open_date'
+      @sort = params[:sort]
+    else
+      @sort = 'deadline'
+    end
+
+    order = case @sort
+    when 'open_date'
+      'created_at DESC'
+    else
+      'deadline DESC'
+    end
+
+
+
+    if params[:person_id]
+      @projects = Person.find(params[:person_id]).projects.paginate(:page => params[:page])
+    else
+      unless params[:query].blank?
+        @projects = Project.find_by_solr(params[:query]).docs
+      else
+        case @kind
+        when 'open'
+          @projects = Project.approved.open.paginate :order => order, :page => params[:page]
+        when 'closed'
+          @projects = Project.approved.closed.paginate :order => order, :page => params[:page]
+        when 'my'
+          @projects = Project.approved.by(current_user).paginate :order => order, :page => params[:page]
+        when 'winners'
+          @projects = Project.approved.has_winner.paginate :order => order, :page => params[:page]
+        else
+          @projects = Project.find(:all)
+        end
+      end
+    end
+    @projects = @projects.paginate :page => params[:page]
+
+  end
+  
+  def winners
+    @projects = Project.has_winner.paginate :page => params[:page]
+  end
+  
+  def closed
+    @projects = Project.closed.paginate :page => params[:page]
+    render 'index'
+  end
+  
+  def unpaid
+    @kind = "unpaid"
+    @sort = "deadline"
+    @projects = Project.unpaid.paginate :page => params[:page]
+    render 'index'
+  end
+  
+  def unapproved
+    @kind = "unapproved"
+    @sort = "deadline"
+    
+    @projects = Project.paid.unapproved.paginate :page => params[:page]
+    render 'index'
+  end
+  
+  def mine
+    @projects = Project.by(current_user).paginate :page => params[:page]
+    render 'index'
+  end
+  
+  def new
+    @project = Project.new
+  end
+  
+  def create
+    @project = current_user.projects.new params[:project]
+    if @project.save
+      message t('project.create.flash.done')
+      redirect_to pay_project_path(@project)
+    else
+      render 'new'
+    end
+  end
+  
+  def edit
+  end
+  
+  def update
+    if @project.update_attributes(params[:project])
+      message t('project.edit.flash.done')
+      redirect_to @project
+    else
+      render 'edit'
+    end
+  end
+  
+  def show
+  end
+  
+  def pay
+    @project = current_user.projects.find params[:id]
+    
+    if request.put?
+      if @project.paid?
+        message 'This project is already paid', :kind => 'error'
+        redirect_to @project
+      else
+        response = PAYPAL_EXPRESS_GATEWAY.setup_purchase(
+          @project.total_fee_in_cents,
+          :ip                => request.remote_ip,
+          :return_url        => process_express_payment_project_url(@project),
+          :cancel_return_url => project_url(@project)
+        )
+        redirect_to PAYPAL_EXPRESS_GATEWAY.redirect_url_for(response.token)
+      end
+    end
+  end
+  
+  def process_express_payment
+    @project = current_user.projects.find params[:id]
+    
+    if @project.paid?
+      message 'This project is already paid', :kind => 'error'
+    else
+      if @project.process_express_payment(params[:token], request.remote_ip)
+        message 'Payment received, thank you!', :kind => 'success'
+      else
+        message 'Payment decliend, please try again.', :kind => 'error'
+      end
+    end
+    
+    redirect_to @project
+  end
+  
+  def admin
+    if request.put?
+      if @project.unprotected_update_attributes(params[:project])
+        if @project.approved?
+          Notifier.deliver_generate_project_invoices @project
+        else
+          Notifier.deliver_project_declined_info @project
+        end
+        message 'Done!'
+        redirect_to @project
+      else
+        render 'admin'
+      end
+    end
+  end
+  
+  protected
+  
+  def permission_check
+    forbidden unless @project.viewable?(current_user)
+  end
+  
+  def fetch_project
+    @project = Project.find(params[:id])
+  end
+  
+  def security_check
+    forbidden unless can_edit?(@project)
+  end
+end

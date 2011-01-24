@@ -1,0 +1,7 @@
+<%= link_to t('common.tab.home'), root_path, state_status('site'), :class => 'hometab' %>
+<%= link_to t('common.tab.logos'), logos_path, state_status('logos') %>
+<%= link_to t('common.tab.competitions'), competitions_path, state_status('competitions') %>
+<%= link_to t('common.tab.projects'), projects_path, state_status('projects') %>
+<%= link_to t('common.tab.profiles'), people_path, state_status('people') %>
+<%= link_to t('common.tab.for_sale'), logos_path(:kind => 'for_sale') %>
+<%= link_to t('common.tab.blog'), posts_path, state_status('posts')  %>

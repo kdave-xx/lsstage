@@ -1,0 +1,18 @@
+<% if admin? %>
+<div class="new">
+  <a href="posts/new">+ New Post</a>
+</div>
+<div class="new">
+  <%= link_to 'Blog Images', blog_images_path %>
+</div>
+
+<% end %>
+
+<div>
+ <h3>Tags</h3>
+ <% Post.tag_counts.each do |tag| %>
+  <%= link_to tag.name, posts_path(:tag => tag.name) %> .
+  <% end %>
+</div>
+
+  

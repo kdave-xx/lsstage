@@ -1,0 +1,16 @@
+development:
+#  bucket_name: logosauce.stage
+  access_key_id: AKIAILAGSBFS7KC743AA
+  secret_access_key: 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
+  use_ssl: false
+
+test:
+#  bucket_name: sportscalendar_test
+  access_key_id: AKIAILAGSBFS7KC743AA
+  secret_access_key: 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
+
+production:
+#  bucket_name: sportscalendar-image
+  access_key_id: AKIAILAGSBFS7KC743AA
+  secret_access_key: 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
+

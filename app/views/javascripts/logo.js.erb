@@ -1,0 +1,50 @@
+document.observe('dom:loaded', function() {
+  ['logo_kind_profile', 'logo_kind_competition'].each(function(option){
+    $(option).observe("change", logo_kind_change);
+  });
+  
+  ['logo_for_sale'].each(function(option){
+    $(option).observe("change", logo_for_sale_change);
+  });
+  
+  
+  // Fire initial event
+  
+  logo_kind_change(this);
+  logo_for_sale_change(this);
+});
+
+function logo_for_sale_change(e) {
+  if ($('logo_for_sale').checked) {
+    $('forsale_detail').show();
+  }
+  else {
+    $('forsale_detail').hide();
+  }
+}
+
+function logo_kind_change(e)
+{
+  if ($('logo_kind_competition').checked)
+  {
+    $('competition').show();
+  }
+  else
+  {
+    $('competition').hide();
+  }
+  
+  if ($('logo_kind_profile').checked)
+  {
+    $('portfolio').show();
+    $('forsale').show();
+  }
+  else
+  {
+    $('portfolio').hide();
+    $('forsale').hide();
+  }
+
+  
+  
+}

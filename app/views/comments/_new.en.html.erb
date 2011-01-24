@@ -1,0 +1,3 @@
+<% remote_form_for [commentable, Comment.new] do |f| %>
+  <%= render :partial => "comments/form", :locals => {:f => f} %>
+<% end %>

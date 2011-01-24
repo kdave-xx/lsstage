@@ -1,0 +1,58 @@
+<% content_for :help do %>
+ <h3>New Competition</h3>
+ <p>To get started is easy.</p>
+ <ol>
+  <li>Fill in your competition brief (this page).</li>
+  <li>Pay your competition fee.</li>
+  <li>Logosauce reviews &amp; approves.</li>
+  <li>Competition goes live.</li>
+ </ol>
+<% end %>
+
+<% javascript 'competition_form.js' %>
+<div class="encapsulate">
+<div id="onethird">
+ <div class="info">
+  <h3>New Competition</h3>
+  <p>To get started is easy.</p>
+  <ol>
+   <li>Fill in your competition brief (this page).</li>
+   <li>Pay your competition fee.</li>
+   <li>Logosauce reviews &amp; approves.</li>
+   <li>Competition goes live.</li>
+  
+  </ol>
+  
+ </div>
+ 
+ <div class="info">
+  <h3>Tips</h3>
+  <ul>
+   <li>It's important to <strong>make your brief as useful as possible</strong>. This is all designers have to go on - so try and provide information to help designer understand what you want.</li>
+   <li>Make your prize-money attractive. The minimum IS a minimum. We recommend more. <strong>Higher values attract better designers and more entries</strong>. Remember that commissioning a design in the traditional manner is likely to be far more expensive.</li>
+   <li>Ensure that you <strong>maintain a dialogue</strong> with designers by commenting on your competition and individual designs that you like or dislike. This helps designers know if they're heading in the right direction.</li>
+   <li>Allow enough time fot the entries to develop. <strong>2-3 weeks</strong> is ideal in our experience.</li>
+   <li><strong>Add links</strong> in your brief to things, sites, designs that you like or don't like and explain your reasoning.</li>
+   <li>If you're worried about what people might think about you running a design contest for your logo or you're reselling design services, you should consider selecting the <strong>PRIVATE</strong> option, which will hide the competition from search engines and the public after the competition closes.</li>
+  
+  </ul>
+  
+ </div>
+ 
+ 
+</div>
+<div id="twothirds">
+
+
+<div class="resultsheader">
+ <h1>New Logo Competition</h1>
+</div>
+
+<% form_for @competition do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <br />
+  <%= f.submit 'Agree and Calculate Payment' %>
+  
+<% end %>
+</div>
+</div>

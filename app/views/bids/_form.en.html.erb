@@ -1,0 +1,61 @@
+<%= f.error_messages %>
+
+<fieldset>
+  <legend><h2>Your bid name*</h2></legend>
+  <p>
+    <%= f.text_field :name %>
+  </p>
+</fieldset>
+  
+<fieldset> 
+  <legend><h2>Description of your proposal/offer*</h2></legend>
+  <p>
+    <%= f.text_area :brief %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h2>Price offered*</h2></legend>
+  <p>
+    US$ <%= f.text_field :price %>
+    <%= h f.object.project.payment_currency %>
+  </p>
+</fieldset>
+
+
+<fieldset>
+  <legend><h2>Supporting Details</h2></legend>
+    <p>
+    <%= f.label :capabilities %><br />
+    <%= f.text_area :capabilities %>
+  </p>
+  <p>
+    <%= f.label :offered_services %><br />
+    <%= f.text_area :offered_services %>
+  </p>
+  <p>
+    <%= f.label :warranties %><br />
+    <%= f.text_area :warranties %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h2>Attach your concept design PDF (if applicable)</h2></legend>
+  <%= f.file_field :image %>
+</fieldset>
+
+<div class="group">
+  		<h2>Review & Agree*</h2>	
+  		<p>
+  		  All projects and bids must comply with these rules. 
+  		  <%= 
+  		    link_to_function '(View Rules +/-)' do |page| 
+  		      page << "Effect.toggle('all_info', 'slide')"
+  	      end
+  		  %>
+      </p>
+  		<div id="all_info" style="display: none; padding: 5px">
+    		<%= render :partial => 'site/projectbidrules' %>
+  		</div>	
+</div>
+

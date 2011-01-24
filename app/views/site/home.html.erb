@@ -1,0 +1,112 @@
+<% javascript 'home_slider' %>
+
+<% content_for :help do %>
+   <h1>Help with Logosauce</h1>
+   <p>You can get slide down help throughout the site by clicking the Help link.Close the Help slider again by clicking the Help button again or the Close Help button at the bottom of the Slider.</p>
+  <ul>
+   <li>Click on Tabs to move between Logos, Competitions, Projects, People and the Blog.</li>
+   <li>On this page click on a Logo, Competition, Project or Activity to jump to that item.</li>
+   <li>Click one of the <em>See More</em> or other links to dig deeper.</li>
+   <li>Sign-up as a user to do more - such as comment on or rate designs, enter competitions, start a competition, advertise a project and more.</li>
+   <li>Membership is always free - but you can also opt for paid options, such as competitions, projects, etc.</li>
+   </ul>
+
+  <p>Welcome and good luck!</p>
+<% end %>
+
+
+
+<% javascript 'about_slider' %>
+<% content_for :about do %>
+ <p>About Logosauce</p>
+<% end %>
+
+<% content_for :banner do %>
+  <div id="slider">
+    <div id="slide">
+      <!--- add image src and hrefs here for banner-->
+      <a href="people/new"><img src="/images/banner_oozing_test2.jpg" width="860px" height="250px" title="Sign up to rate and comment on logos, start something like a competition, advertise a project and more"/></a><a href="people?kind=designers&location=everywhere"><img src="/images/findadesigner.jpg" width="860px" height="250px" title="Sign up to rate and comment on logos, start something like a competition, advertise a project and more"/></a>      
+    </div>
+  </div>
+<% end %>
+
+ <div id="submenu" class="encapsulate">
+     <div class="search">
+  
+	  <% form_tag logos_path, :method => :get do %>
+	    <%= hidden_field_tag :kind, 'search_result' %>
+	    <%= hidden_field_tag :type, @type %>
+	    <div>
+	      <%= text_field_tag :query, params[:query] %>
+	    
+	    <%= submit_tag 'Search', :title => 'Search logos' %>
+	    </div>
+	  <% end %>
+	  </div>  
+ </div>
+
+
+<!--start logos-->
+<div id="homepage_logos">
+ 
+	<div class="resultsheader">
+		<h1>Latest logos. <a href="logos.html">See more here</a> or <a href="logos/new" title="Upload your own logo designs to create your own free design portfolio.">upload your own</a> <a class="rss" href="/logos.rss" title="Get new logos via RSS"><img src="images/rssfeed16x16.png" /></a></h1>
+	</div>
+  	<div class="encapsulate">
+	 <%= render :partial => 'logos/logo', :collection => @logos %>
+	</div>
+</div>
+<!--end logos-->
+
+<!--start competitions-->
+<div id="homepage_comps">
+	<div class="resultsheader" style="margin-top:40px;">
+	 <h2>Design competitions. <a href="/competitions">See more here</a> or <a href="/competitions/new" title="Start your own logo design contest or design competition. It's easy.">start your own</a> <a class="rss" href="/competitions.rss" title="Get new design competitions via RSS"><img src="/images/rssfeed16x16.png" /></a></h2>
+	</div>
+
+	<div id="latestcomps" class="encapsulate">
+	<% @competitions.each do |competition| %>
+	 <div class="comp">
+	  <div class="encapsulate">
+	   <div class="compref">No.<%= competition.id %></div>
+	   <div class="compvalue"><%= number_to_currency competition.prize_value %></div>
+	  </div>
+	  <div class="compname">
+	    <%= link_to h(competition.name), competition %>
+	    <br />
+	    Closing in <%= distance_of_time_in_words(Time.now, competition.close_on) %>
+	  </div>
+	 </div>
+	<% end %>
+	</div>
+</div>
+<!-- end competitions-->
+
+
+<!--start projects-->
+<div id="homepage_projects" class="encapsulate">
+	<div class="resultsheader">
+	 <h2>Design projects(jobs). <a href="/projects">See more here</a> or <a href="/projects/new" title="Place an ad for your design project so designers can bid for your work.  You'll get to select a single designer you want to work with.">advertise your project</a> <a class="rss" href="/projects.rss" title="Get new Projects via RSS"><img src="/images/rssfeed16x16.png" /></a></h2>
+	</div>
+	
+	<div id="latestcomps" class="encapsulate">
+	 <% @projects.each do |project| %>
+	  <div class="project">
+	   <div class="projectname"><%= link_to h(project.name), project %></div>
+	   <div class="projectbrief"><%= textilize truncate(project.brief, 75) %></div>
+	  </div>
+	 <% end %> 
+	</div>
+</div>
+<!-- end projects-->
+
+
+<!--start people-->
+<div id="homepage_activity" class="encapsulate">
+	<div class="resultsheader">
+	   <h2>Someone recently... <%= link_to image_tag('rssfeed16x16.png'), activities_feed_path, :title => 'Get an RSS feed of the latest activity by all Logosauce users', :class => 'rss' %></h2>
+	</div>
+	<div class="encapsulate">
+	    <%= render :partial => "shared/activity", :collection => @activities %>
+	</div>
+</div>

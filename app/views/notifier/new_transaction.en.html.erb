@@ -1,0 +1,13 @@
+Hi Logosauce Admin,
+
+There is new transaction on Logosauce:
+
+Action: <%= @transaction.action %>
+Amount: <%= number_to_currency @transaction.amount_in_dollar %>
+Type: <%= @transaction.loggable_type %>
+
+Success: <%= @transaction.success ? "YES" : "NO" %>
+
+
+Regards
+Logosauce.com

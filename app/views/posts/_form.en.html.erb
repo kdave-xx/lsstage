@@ -1,0 +1,28 @@
+<%= f.error_messages %>
+
+<fieldset>
+  <legend><h3>Properties</h3></legend>
+  
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :tag_list, 'Tag' %><br />
+    <%= f.text_field :tag_list %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h3>Content</h3></legend>
+  
+  <p>
+    <%= f.label :excerpt %><br />
+    <%= f.text_area :excerpt %>
+  </p>
+  <p>
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </p>
+</fieldset>

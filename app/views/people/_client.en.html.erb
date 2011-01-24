@@ -1,0 +1,71 @@
+<div class="profile clearfix">
+  
+	<div id="rating">
+		<p><%= link_to image_tag('/images/feed/16x16.png', :size => '16x16', :alt => 'Recent logos for ' + @person.nick_name ) %></p>
+		<p>Total Rating: <strong><%= @person.statistic.score %></strong><br />
+		Competition Wins: 
+		<strong>
+		  <%= link_to @person.statistic.number_of_gold_medals, won_person_competitions_path(@person) %>
+		</strong>
+		<br />
+		Views: <strong><%= @person.statistic.number_of_views %></strong><br />
+		Logos: <strong><%= @logos.total_entries %></strong></p>
+	</div>
+
+  <div id="info" class="clearfix">
+  	<div id="avatar">
+      <%= image_tag @person.avatar.url(:thumb) %>
+  	</div>
+  	<div id="detail">
+  		<h2>
+  		  <%= h @person.nick_name %>
+  		</h2>
+	
+  		<p>
+  		  Name: <strong><%=h @person.full_name %></strong>
+  		  <br />
+  		  <% unless @person.profile.job_title.blank? %>
+      		Job Title: <strong><%=h @person.profile.job_title %></strong>
+      		<br />
+      	<% end %>
+    	
+      	<% unless @person.profile.company.blank? %>
+      		From: <strong><%= h @person.profile.company %></strong><br />
+      	<% end %>
+    	
+      	<% unless @person.profile.company_website.blank? %>
+      		Website: <strong><%= link_to @person.profile.company_website, @person.profile.company_website %></strong><br />
+      		<br />
+      	<% end %>
+      	
+      	<% unless @person.profile.facebook.blank? %>
+      	  Facebook: <strong><%= link_to h(@person.profile.facebook), 'how?'  %></strong><br />
+      	<% end %>
+    	
+      	<% unless @person.profile.twitter.blank? %>
+      	  Twitter: <strong><%= link_to h(@person.profile.twitter), "http://twitter.com/#{h @person.profile.twitter}"  %></strong><br />
+      	<% end %>
+    	
+    	
+  		<% unless @person.profile.location.blank? %>
+  		  Location: <strong><%=h @person.profile.location %>, <%= @person.profile.country %></strong>
+  		  <br />
+  		<% end %>
+  			Member since: <strong><%= @person.created_at.to_s :long %></strong>
+  			<br />
+  			<%= link_to 'Email ' + @person.nick_name, email_person_path(@person) %>
+  		</p>
+		
+  	</div>	
+	</div>
+	
+</div>
+
+<h2>Logos</h2>
+
+<hr />
+
+<div class="clearfix">
+  <%= render :partial => @logos %>
+</div>
+<%= will_paginate @logos %>

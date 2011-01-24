@@ -1,0 +1,99 @@
+
+    <% if activity.is_a? Person %>
+      <div class="activity">
+       <div class="latestactivities_comment">
+        Joined Logosauce. Yay!
+       </div>
+       <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+       </div>
+        <div class="activity_person encapsulate">
+         <%= image_tag(activity.avatar.url(:thumb)) %>
+         <p><%= link_to_person activity %><br />
+         <em><%= time_ago_in_words activity.created_at %> ago</em>
+         </p>
+        </div>
+      </div>
+       
+    <% elsif activity.is_a? Project %>
+      <div class="activity">
+       <div class="latestactivities_comment">
+        Advertised a project  <%= link_to h(truncate(activity.name, :length => 50)), activity %>
+       </div>
+       <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+       </div>
+       <div class="activity_person">
+         <%= image_tag activity.person.avatar.url(:thumb)  %>
+        <!--<img src="/images/avatars/default_thumb.gif" class="avatar" />-->
+        <p><%= link_to_person activity.person %><br />
+        <em><%= time_ago_in_words activity.created_at %> ago</em></p>
+       </div>
+      </div>
+   
+       
+       
+    <% elsif activity.is_a? Logo %>
+      <div class="activity">
+       <div class="latestactivities_comment">
+        Uploaded a new logo named  <%= link_to h(truncate(activity.name, :length => 30)), activity %>
+       </div>
+       <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+       </div>
+       <div class="activity_person">
+        <%= image_tag(activity.person.avatar.url(:thumb)) %>
+        <p><%= link_to_person activity.person %><br />
+        <em><%= time_ago_in_words activity.created_at %> ago</em></p>
+       </div>
+      </div>
+       
+  <% elsif activity.is_a? Competition %>
+     <div class="activity">
+      <div class="latestactivities_comment">
+       Created logo design competition <%= link_to h(truncate(activity.name, :length => 30)), activity %>
+      </div>
+      <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+      </div>
+      <div class="activity_person">
+        <%= image_tag(activity.person.avatar.url(:thumb)) %>
+        <p><%= link_to_person activity.person %><br />
+        <em><%= time_ago_in_words activity.created_at %> ago</em></p>
+      </div>
+     </div>
+   
+   <% elsif activity.is_a? Comment %>
+     <div class="activity">
+      <div class="latestactivities_comment">
+        <% if activity.commentable_type.eql?("Bid") %>
+          Commented on <%=h(truncate(activity.commentable.name, :length => 50)) %>
+        <% else %>
+          Commented on <%= link_to h(truncate(activity.commentable.name, :length => 50)), activity.commentable %>
+        <% end %>
+      </div>
+      <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+      </div>
+      <div class="activity_person">
+       <%= image_tag(activity.person.avatar.url(:thumb)) %>
+       <p><%= link_to_person activity.person %><br /><em><%= time_ago_in_words activity.created_at %> ago</em></p>
+      </div>
+     </div>
+     
+  <% elsif activity.is_a? Post %>
+     <div class="activity">
+      <div class="latestactivities_comment">
+       Posted a blog article <%= link_to h(truncate(activity.name, :length => 50)), activity %>
+      </div>
+      <div class="speechbubble">
+        <img width="32" height="16" src="/images/bubble_arrow_down.gif"/>
+      </div>
+      <div class="activity_person">
+        <%= image_tag(activity.person.avatar.url(:thumb)) %>
+       <p><%= link_to_person activity.person %><br /><em><%= time_ago_in_words activity.created_at %> ago</em></p>
+      </div>
+     </div>
+  
+  <% end %>
+   

@@ -1,0 +1,2 @@
+page.insert_html :bottom, :comments, :partial => 'comments/comment', :object => @comment
+highlight_last_child page, :comments

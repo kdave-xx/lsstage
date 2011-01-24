@@ -1,0 +1,49 @@
+<h1>Edit Bid</h1>
+<hr />
+
+<% form_for [@project, @bid] do |f| %>
+  <%= f.error_messages %>
+
+<fieldset>
+  <legend>Your bid name</legend>
+  <p>
+    <%= f.text_field :name %>
+  </p>
+  <legend>Description of your proposal/offer.</legend>
+  <p>
+    <%= f.text_area :brief %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend>Price offered</legend>
+  <p>
+    <%= f.text_field :price %>
+    <%= h @project.payment_currency %>
+  </p>
+</fieldset>
+
+
+<fieldset>
+  <legend>Supporting Details</legend>
+    <p>
+    <%= f.label :capabilities %><br />
+    <%= f.text_area :capabilities %>
+  </p>
+  <p>
+    <%= f.label :offered_services %><br />
+    <%= f.text_area :offered_services %>
+  </p>
+  <p>
+    <%= f.label :warranties %><br />
+    <%= f.text_area :warranties %>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend>Attach your concept design (if applicable)</legend>
+  <%= f.file_field :image %>
+</fieldset>
+
+  <%= f.submit 'Update Bid!' %>
+<% end %>

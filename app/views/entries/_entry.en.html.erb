@@ -1,0 +1,49 @@
+<% if entry.viewable?(current_user) %>
+
+<div id="entry">
+<a href="<%= logo_path(entry.logo) %>">
+  
+<div class="logo" id="entry_<%= entry.id %>">
+ 
+ <p class="logo_title">
+    By: <%= h(entry.person.nick_name) %>
+    <br />
+    Score : <%= entry.logo.statistic.try(:score) %>
+    <br />
+    Comments: <%= entry.logo.comments.size %>
+ </p>  
+  
+  <div class="logo_image" style="margin-top:0px";>
+   <%= image_tag(entry.logo.image.url(:thumb), :alt => entry.logo.id) %>
+  </div>
+</div>
+</a>
+  <% unless !current_user %>
+  <% if entry.enterable.person_id.eql?(current_user.id) && !entry.enterable.winner_chosen? %>
+  <% if entry.enterable.closed? %>
+  <%= link_to "Choose Winner", pick_competition_entry_url(entry), :method => :post %>
+  <% end %>
+  <% end %>
+  <% end %>
+<% if entry.withdrawn? %>
+      <div class="withdraw">
+        WITHDRAWN
+      </div>
+    <% else %>
+      <% if entry.person == current_user %>
+        
+      <% end %>
+    <% end %>
+</div>
+
+
+
+<% else %>
+
+<div id="entry private_entry">
+<div class="logo" id="entry_<%= entry.id %>">
+  Private Entry
+</div>
+</div>
+
+<% end %>

@@ -1,0 +1,56 @@
+<div id="bid">
+<h1>Bid name: <%= h @bid.name %></h1>
+<div>
+  By: <%= link_to_person @bid.person %>
+</div>
+
+<hr />
+
+<div>
+  <h2>Price Offered:</h2> 
+  <p>US$ <%= number_to_currency @bid.price %> </h2>
+
+  <hr />	
+  
+  <h2>Description of proposal/offer:</h2>
+  <p><%= textilize @bid.brief %></p>
+  <hr />
+  <h3>Capabilities:</h3>
+  <p>
+    <%= textilize @bid.capabilities %>
+  </p>
+  <h3>Offered services:</h3>
+  <p>
+    <%= textilize @bid.offered_services %>
+  </p>
+  
+  <h3>Warranties:</h3>
+  <p>
+    <%= textilize @bid.warranties %>
+  </p>
+</div>
+
+<!--need to add code here so that the client can access any uploaded design/content as pert of offer - PDF only-->
+
+
+<% if @bid.person == current_user %>
+<div>
+  <%= link_to 'Change bid', edit_project_bid_path(@project, @bid) %>
+</div>
+<% end %>
+
+<!-- comments not required on bids - should be removed-
+<div>
+  <h2>Comments</h2>
+  <div id="comments">
+    <-%= render :partial => "comments/comment", :collection => @bid.comments %>
+  </div>
+  <hr />
+  
+  <-% remote_form_for [@project, @bid, Comment.new] do |f| %>
+    <-%= render :partial => "comments/form", :locals => {:f => f} %>
+  <-% end %>-->
+
+
+</div>
+</div>

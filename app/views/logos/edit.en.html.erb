@@ -1,0 +1,8 @@
+<h1>edit logo</h1>
+<hr />
+
+<% form_for @logo, :html => {:multipart => true} do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <hr />
+  <%= f.submit 'Change' %>
+<% end %>

@@ -1,0 +1,20 @@
+<% content_for :help do %>
+ <h1>Help with Favourites</h1>
+ <p>This page lists the favourite logos selected by the user mentioned at the top of the page.<br /><br />Each user can make any logo in the system a favourite by simply clicking the Fave (Heart)icon located top-right of any logo. Users must be logged in to see the icon and to be able to use it to create a favourites page.<br /><br />If you're logged in and viewing your own Favourites page, then you can remove a logo from your favourites by clicking on the <em>[x] Remove</em> link under each logo in your Favourites page.<br /><br />Note: You will not be able to view any Private logo's that the user has selected as a Favourite (unless you are logged in and have permission to see that logo).</p>
+<% end %>
+
+<div class="encapsulate">
+  <div class="resultsheader">
+   <h2><%= h @person.nick_name %>'s <%= @favourites.total_entries %> favourite logos</h2>
+  </div>
+ <div class="encapsulate">
+  <% @favourites.each do |favourite| %>
+    <div class="fave">
+      <%= render :partial => 'logos/logo', :object => favourite.logo, :locals => {:show_private => true} %>
+      <% if signed_in? and current_user == favourite.person %>
+        <div class="faveremove"><%= link_to '[x] Remove', person_favourite_path(favourite.person, favourite), :method => :delete %></div>
+      <% end %>
+    </div>
+  <% end %>
+ </div>
+</div>

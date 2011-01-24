@@ -1,0 +1,221 @@
+<% include_lightbox %>
+<% javascript 'competition' %>
+
+<% content_for :help do %>
+  <h2>How do I pick a winner</h2>
+  <p>Once the competition has ended (reached it's close date or minimum number of entries) you may pick a winner. Note: A competiton once started may not be ended early unless there are speciali circumstances and subject to the Logosauce Admin's discretion.<br /><br />Select the winner by </p>
+  <h2>Is Prizemoney guaranteed</h2>
+  <p>Yes. Clients pay all prizemoney before any competition is approved or gioes live.</p>
+  <h2>How do I enter?</h2>
+  <p>To enter this competition, read the brief, do your design and click the "+ New Entry" button below. You must be signed-in to enter.</p>
+<% end %>
+
+
+<% if admin? %>
+  <div class="adminside">
+   <h5>Admin tasks</h5>
+   <div class="admin_section">
+     <p>Payment Status:<br /><strong><%= @competition.paid? ? "Paid" : "Unpaid" %></strong></p>
+      <% if @competition.paid? and @competition.success_transaction %>
+       <p>Amount: <strong><%= number_to_currency @competition.success_transaction.amount_in_dollar %></strong></p>
+       <p>Paid At: <strong><%= @competition.paid_at.to_s :long %></strong></p>
+       <p>Transaction Number: <strong><%= @competition.success_transaction.references["transaction_id"] %></strong></p>
+       <p><%= link_to 'View all transactions', competition_transactions_path(@competition) %></p>
+      <% end %>
+     <p>Approval Status:<br /><strong><%= @competition.approved? ? "Approved" : "Unapproved" %></strong></p>
+     <% if @competition.payable? %>
+      <hr />
+      <% form_for [@competition, Payment.new] do |f| %>
+       <%= f.submit 'Pay the winner' %>
+      <% end %>
+     <% end %>
+     <%= link_to "Admin", admin_competition_path(@competition) %>  
+     <hr />
+     <p>
+      <%= link_to "Edit Competition Details", edit_competition_path(@competition) %>
+     </p>
+   </div>
+ </div>
+ <% end %>
+ 
+<div id="submenu" class="encapsulate">
+	<div class="left">
+		<div class="new">
+		   <%= link_to '+ New entry', new_logo_path(:competition_id => @competition.id)%>
+		</div>
+	</div>
+	<div class="right" align="right">
+	</div> 
+</div>
+
+
+<div class="encapsulate">
+ 
+ <div id="competitiondetails">
+ 
+  <h1><%= h(truncate(@competition.name, :length => 50)) %> <a class="rss" href="/competitions/<%= @competition.id %>/comments.rss" title="Get new entries and comments via RSS"><img src="/images/rssfeed16x16.png" /></a></h1>
+  <div class="encapsulate">
+   <div class="left">
+    <p>Competition No.<%= @competition.id %><br />Client: <%= link_to_person @competition.person %><br />Open: <%= @competition.open_on.to_s :date %><br />Close: <%= @competition.close_on.to_s :date %></p>
+   </div>
+   
+   <div class="compmoney right">
+    <h1><%= number_to_currency @competition.prize_value %></h1>
+    <p>Guaranteed Prizemoney</p>
+   </div>
+  </div>
+
+
+<div style="border-top:1px dotted #ccc;">
+  <h3>The brief</h3>
+  <p>
+    <%= textilize @competition.description %>
+  </p>
+  
+  <h3>Target audience</h3>
+  <p>
+    <%= textilize @competition.target_audience %>
+  </p>
+  
+  <% unless @competition.requirement.blank? %>
+  <h3>Specific requirements</h3>
+  <p>
+    <%= textilize @competition.requirement %>
+  </p>
+  
+  <% end %>
+  
+  <h3>Logo format</h3>
+  <p>
+    <%= @competition.logo_format.map{ |f| f.to_s.humanize }.join(', ') %>
+  </p>
+  
+  <h3>Logo use</h3>
+  <p>
+    <%= @competition.logo_use.map{ |f| f.to_s.humanize }.join(', ') %>
+  </p>
+  
+ </div> 
+  <% if can_edit?(@competition) %>
+   <div style="border-top:1px dotted #ccc; padding:10px 0;">
+    <%= link_to "Edit", edit_competition_path(@competition) %>
+   </div>
+  <% end %> 
+</div>
+
+
+
+<% if @competition.winner_chosen? %>
+
+<h1>Winner</h1>
+<div>
+  <%= link_to image_tag(@competition.won.logo.image.url(:medium)), @competition.won.logo %>
+</div>
+
+
+  <% if @competition.won.person == current_user %>
+    <h1>Upload Artwork</h1>
+    <% form_for Artwork.new, :url => competition_artwork_path(@competition), :html => {:multipart => true} do |f| %>
+      <%= f.file_field :document %>
+      <%= f.submit 'Upload' %>
+    <% end %>
+   
+    <% if @competition.artwork %>
+      <h1>Existing Artwork</h1>
+      <%= link_to h(@competition.artwork.document.original_filename), competition_artwork_path(@competition) %></span>
+      <span class="filesize">
+      (<%= number_to_human_size @competition.artwork.document.size %> / <%= @competition.artwork.document_updated_at %>)
+      </span>
+    <% end %>
+  <% end %>
+  
+<% end %>
+
+<ul class="tab_switch clearfix" style="margin-top:30px;">
+  <li class="entries active">
+    <%= link_to_function "Entries (#{@entries.total_entries})", "switch_to_tab('entries')" %>
+  </li>
+  <li class="designers">
+    <%= link_to_function "Entrants (#{@competition.people.size})", "switch_to_tab('designers')" %>
+  </li>
+  <li class="favorites">
+    <%= link_to_function "Client Favorites (#{@competition.favorite_entries.size})", "switch_to_tab('favorites')" %>
+  </li>
+  <% if signed_in? and current_user.running_for_competition?(@competition) %>
+  <li class="my">
+    <%= link_to_function "My (#{@competition.entries.by_person(current_user).size})", "switch_to_tab('my')" %>
+  </li>
+  <% end %>
+  <li class="wall">
+    <%= link_to '< Wall >', wall_competition_path(@competition), :title => 'All the logos, no pagination' %>
+  </li>
+
+</ul>
+
+<div class="tabs" id="competiton_tab">
+  <div class="tab_panel" id="entries">
+    <div class="clearfix">
+      <%= render @entries %>
+    </div>
+	
+    <%= will_paginate @entries %>
+    
+  </div>
+  <div class="tab_panel" id="designers" style="display: none">
+    <div class="clearfix">
+
+      <% @logos = @competition.logos %>
+      <% @people = [] %>
+      <% @logos.each do |logo| %>
+      <% @people << logo.person %>
+      <% end %>
+      
+      <%# @competition.people.each do |person| %>
+      <% @people.uniq.each do |person| %>
+        <div class="person">
+          <p class="person_title"><%= h(person.nick_name) %><br /><%= @competition.entries.by_person(person).size %> entries</p>
+          <div class="person_image">
+            <%= link_to image_tag(person.avatar.url(:thumb)), competition_person_path(@competition, person) %>
+          </div>
+        </div>
+      <% end %>
+    
+    </div>
+  </div>
+  
+  <div class="tab_panel" id="my" style="display: none">
+    <% if signed_in? and current_user.running_for_competition?(@competition) %>
+    <div class="clearfix">
+      <%= render @competition.entries.by_person(current_user) %>
+    </div>
+    <% end %>
+  </div>
+  
+  <div class="tab_panel" id="favorites" style="display: none">
+    <div class="clearfix">
+      <%= render @competition.favorite_entries %>
+    </div>
+  </div>
+  
+</div>
+
+<div id="competition_feedback" style=" width:640px;">
+  <h2>Comments</h2>
+    
+  <div id="comments">
+     <%= render :partial => "comments/comment", :collection => @competition.comments %>
+  </div>
+  
+  <div class="clear"></div>
+  
+  <% if signed_in? %>
+	  <% remote_form_for [@competition, @competition.comments.new] do |f| %>
+	    <%= render :partial => "comments/form", :locals => {:f => f} %>
+	  <% end %>
+  <% else %>
+	  <%= render :partial => "comments/sign_in_required" %>
+  <% end %> 	  
+ 
+</div>
+
+</div>

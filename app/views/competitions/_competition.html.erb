@@ -1,0 +1,66 @@
+<% if competition.viewable?(current_user) %>
+<div class="competition" style="height:250px;">
+ <div style="background:#fff; padding:10px;">
+ <div class="encapsulate">
+  <div class="competitionref"><p>No.<%= competition.id %></p></div>
+  <div class="competitionvalue"><h3><%= number_to_currency competition.prize_value %></h3></div>
+ </div> 
+ <p align="center">
+	<% if competition.closed? %>
+	  <% if competition.winner_chosen? and competition.won %>
+	    <%= image_tag(competition.won.logo.image.url(:thumb)) %>
+      <br />
+	  <!---if won show the winning logo -->
+		  <%=  %>
+	  <% else %>
+  	  <!-- <img src="winner yet to be announced image" width="100px" height="100px" title="Competition closed - winner to be announced soon" />-->
+	  <% end %>
+	<% else %>
+		<%= link_to image_tag('enternow.jpg'), new_logo_path(:competition_id => competition.id), :title => 'This competition is still open - enter now (you will need to be logged in and a designer who signed up on Logosauce before the competition start date).' %>
+		  <br />
+	<% end %>
+	
+  <%= link_to h(competition.name), competition %>
+  <br />
+  <% if competition.private? %>
+   (Private)
+  <% end %>
+  <% if competition.closed? %>
+	  <% if competition.winner_chosen? %>
+	  <!--if competition Won-->
+		  (Won!)
+	  <!-- else--> 
+	  <% else %>
+	   (Closed)
+	  <!--end-->
+	  <% end %> 
+   <% else %>
+    Closing in <%= distance_of_time_in_words(Time.now, competition.close_on) %>
+  <% end %>
+ </p>
+ </div>
+  <% if admin? %>
+   <div class="admincomp">
+   <%= link_to "Approve", approve_competition_path(competition), :method => :post, :confirm => "Are you sure?" %>
+   |
+   <%= link_to "Edit", edit_competition_path(competition) %>
+   </div>
+  <% end %>
+</div>
+<% else %>
+<div class="competition" style="height:250px;">
+ <div style="background:#fff; padding:10px;">
+ <div class="encapsulate">
+  <div class="competitionref"><p>No.<%= competition.id %></p></div>
+  <div class="competitionvalue"><h3><%= number_to_currency competition.prize_value %></h3></div>
+ </div> 
+ <p align="center">
+  <img src="/images/private.jpg" width="100px" height="100px" title="Private competition - not viewable unless you are the client or you entered prior to the close date"/>
+  <br />
+  Private Competition
+  <br />
+   (Closed)
+ </p>
+ </div>
+</div>
+<% end %>

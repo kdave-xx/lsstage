@@ -1,0 +1,38 @@
+<h1>About Logosauce</h1>
+<h4>Logosauce is a celebration of logos and just <%= link_to 'oozes logo goodness', oozing_path %>. Offering logo design inspiration, help with <%= link_to 'finding a logo designer', findadesigner_path %>, a place where clients can easily <%= link_to 'run a design contest', getalogo_path %> and a place where designers can get discovered and <%= link_to 'find design clients', findaclient_path %>. <br /><br />Best of all it's free to <%= link_to 'join', new_person_path %>. Enjoy.</h4>
+
+
+<div class="encapsulate">
+	<h2>What can you do here</h2>
+	<div class="aboutpanel">
+		<img src="/images/oozing.gif" alt="oozing" width="190" height="100" style="margin-bottom:10px;" />
+		<h3>Oozing logo goodness</h3>
+		<p>Logosauce is all about Logos. There's so much logo goodness in here it's just oozing out.</p><p><%= link_to 'Oozing logo goodness ...', oozing_path %></p>
+	</div>
+	
+	<div class="aboutpanel">
+		<img src="/images/logodesigners.gif" width="190" height="100" style="margin-bottom:10px;"/>
+		<h3>Find a designer</h3>
+		<p>Need a logo designer? We have thousands from all around the globe to choose from.</p>
+		<p>
+		  <%= link_to 'Find a designer...', findadesigner_path %>
+		</p>
+	</div>
+	<div class="aboutpanel">
+		<img src="/images/runlogo.gif" width="190" height="100" style="margin-bottom:10px;"/>
+		<h3>Run a design contest</h3>
+		<p>Want a new logo? It's easy and fun to run a  design contest or competition. Guaranteed results.</p>
+		<p>
+		  <%= link_to 'Run a design contest...', getalogo_path %>
+		</p>
+	</div>
+	<div class="aboutpanel">
+		<img src="/images/findaclient.gif" width="190px" height="100" style="margin-bottom:10px;"/>
+		<h3>Find design clients</h3>
+		<p>Are you a designer? Love logos? Want more design work?</p>
+		<p>
+		  <%= link_to 'Find design clients...', findaclient_path %>
+		</p>
+	</div>
+</div>
+	 			 		 

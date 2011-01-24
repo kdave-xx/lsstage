@@ -1,0 +1,77 @@
+<% content_for :help do %>
+  <h2>Clients can create competitions</h2>
+  <p>If you wish to create  a competition please <%= link_to 'log in', new_session_path %> first then <%= link_to 'create a competition', new_competition_path %>. You will need to offer a prize for the winning design (with a MINIMUM VALUE OF US$200). Competitions will be moderated (reviewed) by Logosauce administrators before being approved. Once approved you will be asked to pay the prize-money and any administration fees. Once paid the competition will automatically go live and be visible to users.</p>
+  <p>At the end of the competition, you must select a winner from the available entries. Instructions on how to do that are available <a href="http://www.logosauce.com/blog/2006/11/17/how-to-pick-a-competition-winner">here.</a></p>
+ <h2>Designers can enter competitions.</h2>
+ <p>Practice your skills with possible rewards! To enter a competition please <%= link_to 'log in', new_session_path %> then <%= link_to 'upload', new_logo_path %> a logo and select Competition Entry as the logo type, then select the competition you wish to enter in the competition drop-down box. Please note that prizemoney is paid out via Paypal only.  Please check that you can receive Paypal payments in your country. You must have your Payalp address recorded in your user profile before you can enter a competition.</p>
+<% end %>
+
+<%= render :partial => 'admin' %>
+<div id="submenu" class="encapsulate">
+
+ <div class="new">  
+	 <%= link_to '+ Create competition', new_competition_path, :title =>  "Start a new logo design contest" %></span>
+ </div>
+
+  <div class="search">
+   
+   <div>
+     <% form_tag competitions_path, :method => :get do %>
+        <%= hidden_field_tag :kind, 'search_result' %>
+       <div>
+          <%= text_field_tag :query, params[:query] %> <%= submit_tag 'Search' %>
+       </div>
+       <div style="display:none">
+       Sort by: 
+         <label><%= radio_button_tag :sort, 'open_date', params[:sort] == 'open_date' %> Open</label>
+         
+         <label><%= radio_button_tag :sort, 'close_date', params[:sort] == 'close_date' %> Close</label>
+         
+         <label><%= radio_button_tag :sort, 'prize_value', params[:sort] == 'prize_value' %> Value</label>
+         
+       </div>
+       
+     <% end %>
+   </div>
+</div>
+</div>
+
+
+<div class="encapsulate">
+    				
+    
+   <div class="resultsheader">
+     <ul class="title_menu clearfix">
+       <li>Showing</li>
+       <li class="menu_item">
+         <%= link_to_title_menu @kind, 'Select from All, Open, Closed, or My Competitions' %>
+         <div class="menu" style="display: none;">
+           <p><%= link_to 'All', competitions_path(:kind => 'all', :sort => @sort) %></p>
+           <p><%= link_to 'Open', competitions_path(:kind => 'open', :sort => @sort) %></p>
+           <p><%= link_to 'Closed', competitions_path(:kind => 'closed', :sort => @sort) %></p>
+           <p><%= link_to 'Winners', competitions_path(:kind => 'winners', :sort => @sort) %></p>
+           
+           <% if signed_in? %>
+            <p><%= link_to 'My', competitions_path(:kind => 'my', :sort => @sort) %></p>
+           <% end %>
+         </div>
+       </li>
+       <li>competitions by</li>
+       <li>
+         <%= link_to_title_menu @sort, 'Sort by Open date, Close date or Prize Value.' %>
+         <div class="menu" style="display: none;">
+           <p><%= link_to 'Open Date', competitions_path(:kind => @kind, :sort => 'open_date') %></p>
+           <p><%= link_to 'Close Date', competitions_path(:kind => @kind, :sort => 'close_date') %></p>
+           <p><%= link_to 'Prize Value', competitions_path(:kind => @kind, :sort => 'prize_value') %></p>
+         </div>
+       </li>
+       <li><a class="rss" href="/competitions.rss" title="Get new design competitions via RSS"><img src="/images/rssfeed16x16.png" /></a></li>
+    </ul>
+   </div>
+   <div class="encapsulate">	
+  	<%= render :partial => 'competition', :collection => @competitions %>
+   </div>	
+  	
+  	<div class="paginate"><%= will_paginate @competitions %></div>
+
+</div>

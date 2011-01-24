@@ -1,0 +1,21 @@
+<div class="search">
+    <h5>Search competitions</h5>
+   <div>
+     <% form_tag competitions_path, :method => :get do %>
+        <%= hidden_field_tag :kind, 'search_result' %>
+       <div>
+         <%= text_field_tag :query, params[:query] %>
+       </div>
+       <div>
+       By: 
+         <label><%= radio_button_tag :sort, 'open_date', params[:sort] == 'open_date' %> Open</label>
+         
+         <label><%= radio_button_tag :sort, 'close_date', params[:sort] == 'close_date' %> Close</label>
+         
+         <label><%= radio_button_tag :sort, 'prize_value', params[:sort] == 'prize_value' %> Value</label>
+         
+       </div>
+       <%= submit_tag 'Search' %>
+     <% end %>
+   </div>
+ </div>

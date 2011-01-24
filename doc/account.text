@@ -1,0 +1,7 @@
+**UBUNTU
+deploy    : $ecureDeploy
+manager   : $ecureManager
+
+**MYSQL
+root      : Datac3ntr3
+logosauce : ***HIDDEN***

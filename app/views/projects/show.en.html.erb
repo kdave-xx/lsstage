@@ -1,0 +1,80 @@
+<% content_for :help do %>
+  <h1>Help with Projects</h1>
+  <p>Projects are the opposite of competitions. With a <em>Project</em> the aim is to select and comission a single designer to do your design work. Once you advertise your Project, you will receive private bids from designers for your project, which may include a written proposal, quoted price and links to the designers portfolio.  You will be able to see their past work at Logosauce, any competition wins, etc. <br /><br />Once you pick a successful bid, the winner of the bid will be displayed and you will then commence your work with the designer. At the end of the project you may choose to display the results in your logosauce profile and the designer may upload the finished work to his or her portfolio.<br /><br /></p>
+<% end %>
+
+<%= render :partial => "admin_project" %>
+
+<div id="submenu" class="encapsulate">
+    <% if can_bid?(@project) %>
+     <div class="new">
+       <%= link_to '+ Place a bid', new_project_bid_path(@project) %>
+     </div>
+   <% end %>
+</div>    
+
+
+<div class="encapsulate">
+ 
+  <div id="projectdetails">
+  
+   <h1><%= h @project.name %> </h1>
+   <div class="encapsulate" style="border-bottom:1px dotted #ccc;">
+    <div class="left">
+     <p>Project Number. <%= @project.id %><br />Client: <%= link_to_person @project.person %><br />
+       Open: <%= @project.created_at.to_s :date %><br />
+       Close: <%= @project.deadline.to_s :date %></p>
+    </div>
+    <div class="bidcount right">
+     <h1><%= @project.bids.count %></h1>
+     <p>bids</p>
+    </div>
+   </div>
+   
+   <div id="projectbrief">
+    <h3>The brief</h3>
+    <%= textilize @project.brief %>
+   </div> 
+    
+    <h4>Additional requirements</h4>
+    <div id="adprojectdetails">
+     <p>Bid must be made in the following currency: <strong>US$</strong><br />
+     All bids for this project are made subject to <strong>Logosauce Project Rules.</strong></p>
+    </div>
+    
+     
+ 
+ 
+   <% if can_edit?(@project) %>
+    <div>
+     <%= link_to 'Edit project', edit_project_path(@project) %>
+    </div>
+   <% end %>
+  </div>
+
+  <div id="bids">
+   <h2>Bids</h2>
+   
+    <% if @project.winning_bid %>
+     
+     <div class="winning_bid">
+	     <div class="encapsulate">
+		     <div class="left">
+			     <p><%= @project.winning_bid.name %> (#<%= @project.winning_bid.id %>) <em>by</em> <%= link_to_person @project.winning_bid.person %></p>
+		     </div>
+			 <div class="bidcount right">
+			      <h1><%= number_to_currency @project.winning_bid.price %></h1>
+		     </div>
+		 </div>    
+     	 <h1 align="center">WINNER</h1>
+     </div>
+	 
+	     
+     
+	<% end %>
+
+ 
+  <%= render @project.bids %>
+
+</div>
+</div>

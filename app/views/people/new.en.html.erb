@@ -1,0 +1,80 @@
+<% content_for :help do %>
+ <h1>Help with People</h1>
+ <p>Sign-up for a free user (designer or client/fan) account or choose a paid Pro designer account if you want that option.</p>
+ <ul>
+   <li>Complete all the details and then click the sign-up button.</li>
+   <li>The Human authentication is to prevent machines completing this form.</li>
+ </ul>
+<% end %>
+
+
+
+
+<% stylesheet 'simple_captcha' %>
+
+<div class="encapsulate">
+<div id="twothirds">
+
+<h1>Sign-up - it's free.</h1>
+<p>
+  Membership is completely free (unless you want a Pro designer account). By registering you will gain full access to everything Logosauce&trade; has to offer. Including, uploading logos, commenting, rating, embedding logos into other websites, creating and/or participating in competitions, and much more. Free, forever!</p>
+
+<% form_for @person do |f| %>
+  <%= f.error_messages %>
+  
+  <fieldset>
+    <label>User Type:</label><br /><br />
+    <label><%= f.radio_button :kind_for_sign_up, Person::KIND[:designer] %> Designer</label>
+   <br />
+    &nbsp;&nbsp;<label><%= f.radio_button :kind_for_sign_up, Person::KIND[:paid_designer] %> Pro Designer (<em>Optional</em> a $50 application fee applies)</label>
+    <br />
+    <label><%= f.radio_button :kind_for_sign_up, Person::KIND[:client] %> Client/Fan (looking for a designer or a logo design or just looking)</label> 
+   
+  </fieldset>
+  
+  <fieldset>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+    <br /><br />
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>  
+  </fieldset>
+  
+  <fieldset>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+    <br /><br />
+    <%= f.label :nick_name %><br />
+    <%= f.text_field :nick_name %><br />  
+     Appears under your logos, on comments, etc.  
+  </fieldset>
+  
+  <% fields_for @profile do |p| %>
+    <fieldset>
+      <%= p.label :location %><br />
+      <%= p.text_field :location %> e.g. city/town
+      <br /><br />
+      <%= p.label :country %><br />
+      <%= p.country_select :country, ["United States", "New Zealand", "Australia"], :include_blank => true %>
+    </fieldset>
+  <% end %>
+  
+  
+  <fieldset>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  <br />
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>  
+  </fieldset>
+  
+  
+
+  
+  <%= show_simple_captcha(:object => 'person', :label => "(Human authentication)") %>
+  <br />
+  <%= f.submit 'Sign-up' %>
+  
+<% end %>
+</div>
+</div>

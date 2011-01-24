@@ -1,0 +1,202 @@
+<% content_for :help do %>
+ <h1>Help with Logos</h1>
+ <p>On this page you can view a larger image and details of this logo.</p>
+ <ul>
+   <li>You can view a designers portfolio page by clicking on the designers name.</li>
+   <li>You can rate (vote) the logo once if you're signed in.</li>
+   <li>You can comment as many time as you like if you're signed in.</li>
+   <li>You can view a light-box version of the logo by clicking on it.</li>
+   <li>You can tweet the logo by clicking the tweet icon if you've included your twitter account in your profile  .</li>
+   <li>You can add this logo to your favourites by clicking the Fave (heart) icon if you're signed in.</li>
+   <li>You can buy the logo design if it's for sale by clicking the Buy this logo link or icon.</li>
+   <li>You can view other logos with tagged with the same think by clicking a tag.</li> 
+  </ul>
+<% end %>
+
+<% include_lightbox %>
+
+<div class="logo_display clearfix">
+
+
+<div id="gallerywall" class="encapsulate">
+
+<% if admin? and @logo.sold? %>
+<div class="admin_section">
+  <p>Sold To: <strong><%= link_to_person @logo.buyer %></strong></p>
+  <p>Transaction Number: <strong><%= @logo.success_transaction.references["transaction_id"] %></strong></p>
+  <p>Transaction Amount: <strong><%= number_to_currency @logo.success_transaction.amount_in_dollar %></strong></p>
+  <p><%= link_to 'View all transactions', logo_transactions_path(@logo) %></p>
+
+  <% if @logo.payable? %>
+    <hr />
+    <% form_for [@logo, Payment.new] do |f| %>
+      <%= f.submit 'Pay the seller' %>
+    <% end %>
+  <% end %>
+
+</div>
+<% end %>
+
+<h1>'<%= h @logo.name %>' by <%= link_to @logo.person.nick_name, @logo.person %> <a href="/logos/<%= @logo.id %>/comments.rss" title="Get logo feedback via RSS"><img src="/images/rssfeed16x16.png" /></a></h1>
+<div id="art" style="padding:10px 0 10px 100px; float:left;">
+ 
+    <a href="<%= @logo.image.url(:large) %>" rel="lightbox" title="<%= h @logo.name %>">
+      <div id="canvas"><%= image_tag @logo.image.url(:large) %></div>
+    </a>
+ </div>
+ 
+ <div id="act">
+  <!--Add Tweet this logo function-->
+  <div class="actions">	
+	    <%= link_to_twitter '', "This logo rocks: #{logo_url(@logo)} #Logosauce" %>
+   </div>
+  <div class="actions">
+    	<% if signed_in? %>
+  		    <% if current_user.favourites.favoured?(@logo) %>
+  		    <%= link_to '', person_favourites_path(current_user), :id => 'fav_link', :class => 'favoured', :title => 'This logo is in my favourites' %>
+  		  <% else %>
+    		  <%= link_to '', person_favourites_path(current_user, :logo_id => @logo.id), :method => :post, :id => 'fav_link', :title => 'Add this logo to my favourites' %>
+  		  <% end %>
+  		<% end %>
+  </div>
+  
+   <!-- Add for sales/buy this function-->
+   <div class="actions">	
+  		<% if @logo.purchasable? %>
+    		<%= link_to '', pay_logo_path(@logo), :id => 'for_sale_link', :title => 'click to buy this logo'%>
+    	<% elsif @logo.sold? %>
+      	<%= link_to '', sold_logo_path(@logo), :id => 'for_sale_link', :class => 'sold', :title => 'Yay! this logo has been sold' %>
+  		<% end %>  		
+   </div>
+
+
+ </div>
+  
+</div>
+
+<div id="ratings" class="clearfix">
+   <div style="float:left; width:45%;"><%= image_tag('/images/tomato.gif') * @logo.average_rating %></div>
+   <div style="float:right; width:45%; text-align:right;"> <p>FAVOURITES: <span><%= @logo.favourites.size %></span> &nbsp;&nbsp;&nbsp; SCORE: <span class="score"> <%= @logo.statistic.try(:score) %></span> &nbsp;&nbsp;&nbsp; VIEWS: <%= @logo.statistic.try(:number_of_views) %></div>
+</div>
+
+
+<div id="logodetails" class="clearfix">
+<div id="info">
+    		
+		<% unless @logo.brand_name.blank? %>
+		<div>
+		  <strong>Brand:</strong> <%= h @logo.brand_name %>
+		</div>
+		<% end %>
+		
+		<% unless @logo.brand_owner.blank? %>
+		<div>
+		  <strong>Owner:</strong> 
+		  
+		  <% if @logo.brand_owner_website.blank? %>
+  		  <%= h @logo.brand_owner %>
+		  <% else %>
+                   <%= link_to h(@logo.brand_owner), (@logo.brand_owner_website[0..7] != "http://") ? "http://#{@logo.brand_owner_website}" : @logo.brand_owner_website, :target => :new %>
+		  <% end %>
+		  
+		</div>
+		<% end %>
+		
+		<% unless @logo.year_first_used.blank? %>
+		<div>
+		   <strong>First Used:</strong> <%= h @logo.year %>
+		</div>
+		<% end %>
+		
+		<div>
+		  <strong>Published:</strong> <%= @logo.created_at.to_s :date %></p>
+		</div>
+		
+				
+		<% if @logo.competition_entry? %>
+		<br />
+  		<% if @logo.withdrawn? %>
+    		<div>
+    		  Status: <strong>Withdrawn Competition Entry </strong>
+    		  <br />
+    		  <%= link_to @logo.competition.name, @logo.competition %>
+    		</div>
+  		<% else %>
+  		  <% if @logo.competition %>
+    		<div>
+    		  <% if @logo.entry.winner? %>
+    		  Status: <strong>Competition Winner </strong>
+    		  <% else %>
+    		  Status: <strong>Competition Entry </strong>
+    		  <% end %>
+    		  <br />
+    		  Competition: <%= link_to @logo.competition.name, @logo.competition, :title => 'Click to view competition page' %>
+    		</div>
+    		<% end %>
+  		<% end %>
+		<% end %>
+		  
+	  <% if @logo.sold? %>
+  	  <p>
+  		  <strong:>Sold for <%= number_to_currency @logo.price %> to <%= link_to_person @logo.buyer %></strong:>
+  		</p>
+		<% end %>
+		<p>
+  		
+		  <% if @logo.purchasable? %>
+		    <strong>Price:</strong> <%= number_to_currency @logo.price %><br />  
+		    <%= link_to 'Buy this logo', pay_logo_path(@logo), :title => 'Click to buy this logo' %>
+    		<br />
+    		<br />
+		  <% end %>
+		</p>  
+  </div>
+  
+  <!-- add description-->
+  <div id="description">
+	 
+     <div>
+		 <strong>Tags:</strong>
+		  <% @logo.tags.each do |tag| %>
+		    <%= link_to h(tag.name), logos_path(:query => tag.name) %> .
+		  <% end %>
+		</div>
+	 
+	 <!--if description exists-->
+	 <br />
+	 <%= textilize @logo.description %>   	
+  </div>	
+		<p align="right">  
+  		  <% if @logo.editable?(current_user) %>
+         <%= link_to 'Edit', edit_logo_path(@logo), :title => 'Click to edit the details of this logo, upload a new image, etc' %>
+       <% end %>  
+       <% if @logo.deletable?(current_user) %>
+         <%= link_to 'Delete', logo_path(@logo), :method => :delete, :title => 'Click to permanently delete this logo' %>
+       <% end %>  
+  		  <% if @logo.withdrawable?(current_user) %>
+   		  <%= link_to 'Withdraw', withdraw_competition_entry_path(@logo.competition, @logo.entry), :method => :delete, :title => 'Click to withdraw this logo from the competition - will not delete logo' %>
+  		  <% end %>
+     </p>
+ </div> 
+   
+</div>
+
+
+<div id="feedback">
+ 
+  <h2>Feedback</h2>
+   
+   <div id="comments" class="encapsulate">
+    <%= render @logo.comments %> 
+ </div>  
+
+  <div style="margin:20px 0;">
+  <% if signed_in? %>
+  <% remote_form_for [@logo, Comment.new] do |f| %>
+    <%= render :partial => "comments/form", :locals => {:f => f} %>
+  <% end %>
+  <% else %>
+    <%= render :partial => "comments/sign_in_required" %>
+  <% end %>
+  </div>
+</div>

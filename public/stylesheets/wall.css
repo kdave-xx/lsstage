@@ -1,0 +1,55 @@
+#top {width:100%; height: 60px;}
+#walltitle {position:absolute; background: #222; padding: 0; margin: 0; top:5px; left:20px; }
+#walltitle p {color: #ccc;}
+#walltitle a {color: #ccc; text-decoration: underline;}
+#walltitle a:hover {color: #fff;}
+
+#page {width:100%; bottom: 25px;}
+#content {width:100%; background-color: #222;}
+#main {width:100%; margin: 0;}
+#footer {position:fixed; bottom: 0; height:25px;}
+#inner_footer {width:100%;}
+#help_slide_down div {margin:auto; width:100%;}
+
+#logowall {padding: 25px;}
+
+#logowall .logo {
+  float: left;
+  display: block;
+  margin: 0 50px 50px 0;
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+  background-color: transparent;
+  border: none;
+}
+
+#logowall .logo_image {
+  width: 100px;
+  height: 100px; 
+  line-height: 100px;
+  text-align: center;
+}
+
+#logowall .logo img {
+  display: table-cell;
+  vertical-align: middle;
+  background-color: transparent;
+  vertical-align: middle;
+  max-height: 100px;
+  width: 100px;
+  line-height: 100px!important;
+  border: none;
+}
+
+#logowall .logo a {
+  color: #f33;
+  display: block;
+  border: 0px solid #333;
+  text-decoration: none;
+}
+
+
+#logowall .logo .logo_image {background-color: #222;}
+#logowall .logo .logo_title {color:#ccc;}
+#logowall .logo p {color: #ccc;}

@@ -1,0 +1,19 @@
+<h1>Total</h1>
+<hr />
+<p>
+ Pro Designer application fee:  US<%= number_to_currency @person.pro_fee %><br />
+  
+</p>
+<br />
+<h1>Pay and Submit</h1>
+<hr />
+
+<p>This is a non-refundable application fee. You can learn more about Pro accounts <a href="../../faq#pro">here</a>.</p>
+<br />
+
+  
+<% form_tag pay_person_path(@person), :method => :put do %>
+  <%= submit_tag 'Pay' %>
+<% end %>
+
+<br />

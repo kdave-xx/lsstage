@@ -1,0 +1,7 @@
+function switch_to_tab(tab) {
+  ['my', 'designers', 'entries', 'favorites'].each(function(i) { $(i).hide() });
+  $$('ul.tab_switch li').each(function(l) { l.removeClassName('active')});
+  
+  $$('ul.tab_switch li.' + tab).first().addClassName('active');
+  $(tab).show();
+}

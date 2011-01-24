@@ -1,0 +1,42 @@
+<div class="encapsulate">
+<div id="onethird">
+  <div class="new">
+    <h2 style="color:#eee;">Not yet signed up?</h2>
+    <h1><a href="/people/new">Sign-up here</a></h1>
+  </div> 
+</div>  
+
+<div id="twothirds">
+
+<h1>Login to Logosauce</h1>
+
+
+<% form_tag session_path do %>
+  <fieldset>
+    <p>      
+      <%= label_tag :email %>
+      <br />
+      <%= text_field_tag :email %>
+    </p>
+    <p>
+      <%= label_tag :password%>
+      <br />
+      <%= password_field_tag :password %>
+    </p>
+    <p>      
+      <%= check_box_tag :remember_me %>
+      <%= label_tag :remember_me %>
+    </p>
+    <p>
+      <%= submit_tag 'Login' %>
+    </p>
+  </fieldset>
+<% end %>
+<br />
+<p>
+  Lost your password? Click <%= link_to 'here to reset your password', forget_password_session_path %>
+</p>
+
+</div>
+</div>
+

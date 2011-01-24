@@ -1,0 +1,9 @@
+<% if signed_in? %>
+ <%= link_to 'My Profile', person_path(current_user), state_status('my_profile') %>
+<% end %>
+<%= link_to 'Blog', posts_path, state_status('posts')  %>
+<%= link_to 'People', people_path, state_status('people') %>
+<%= link_to 'Projects', projects_path, state_status('projects') %>
+<%= link_to 'Comps', competitions_path, state_status('competitions') %>
+<%= link_to 'Logos', logos_path, state_status('logos') %>
+<%= link_to_toggle_about %>
